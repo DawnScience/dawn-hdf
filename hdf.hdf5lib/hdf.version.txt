@@ -1,0 +1,7 @@
+hdf5 (ftp://ftp.hdfgroup.uiuc.edu/pub/outgoing/SWMR, 1.10.0),
+hdfview2-svn (http://svn.hdfgroup.uiuc.edu/hdfview/branches/hdfview-2, r59, 20150702)
+lz4 (https://github.com/Cyan4973/lz4, r131, 20150629)
+Dectris HDF5 plugin (https://github.com/dectris/HDF5Plugin, 20130903)
+
+(Note 32-bit OS no longer supported.)
+
