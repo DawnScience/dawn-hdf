@@ -3,13 +3,13 @@
 
 General Information:
 -------------------
-                   HDF5 Version: 1.10.0
-                  Configured on: Wed Mar 30 14:01:14 BST 2016
-                  Configured by: n/a
+                   HDF5 Version: 1.10.1
+                  Configured on: Thu May  4 15:33:15 BST 2017
+                  Configured by: src77879@ws167.diamond.ac.uk
                     Host system: x86_64-unknown-linux-gnu
-              Uname information: Linux ws.diamond.ac.uk 2.6.32-573.12.1.el6.x86_64 #1 SMP Mon Nov 23 12:55:32 EST 2015 x86_64 x86_64 x86_64 GNU/Linux
+              Uname information: Linux ws167.diamond.ac.uk 2.6.32-642.13.1.el6.x86_64 #1 SMP Wed Nov 23 16:03:01 EST 2016 x86_64 x86_64 x86_64 GNU/Linux
                        Byte sex: little-endian
-             Installation point: /scratch/tmp/hdf-java-build/tmp
+             Installation point: /scratch/hdf/tmp
 
 Compiling Options:
 ------------------
@@ -25,7 +25,7 @@ Linking Options:
   Statically Linked Executables: 
                         LDFLAGS: 
                      H5_LDFLAGS: 
-                     AM_LDFLAGS:  -L/scratch/tmp/hdf-java-build/tmp/lib
+                     AM_LDFLAGS:  -L/scratch/hdf/tmp/lib
                 Extra libraries: -lrt -lpthread -lz -ldl -lm 
                        Archiver: ar
                          Ranlib: ranlib
@@ -36,9 +36,9 @@ Languages:
                      C Compiler: /usr/bin/gcc ( gcc (GCC) 4.4.7 20120313 )
                        CPPFLAGS: 
                     H5_CPPFLAGS: -D_GNU_SOURCE -D_POSIX_C_SOURCE=200112L   -DNDEBUG -UH5_DEBUG_API
-                    AM_CPPFLAGS:  -I/scratch/tmp/hdf-java-build/tmp/include
-                        C Flags: 
-                     H5 C Flags: -std=c99 -pedantic -Wall -Wextra -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline -Wno-long-long -Wfloat-equal -Wmissing-format-attribute -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wformat=2 -Wunreachable-code -Wendif-labels -Wdeclaration-after-statement -Wold-style-definition -Winvalid-pch -Wvariadic-macros -Wnonnull -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wunused-macros -Wunsafe-loop-optimizations -Wc++-compat -Wstrict-overflow -Wlogical-op -Wlarger-than=2048 -Wvla -Wsync-nand -Wframe-larger-than=16384 -Wpacked-bitfield-compat  -s -O3
+                    AM_CPPFLAGS:  -I/scratch/hdf/tmp/include
+                        C Flags: -fPIC -msse4 -mavx
+                     H5 C Flags: -std=c99 -pedantic -Wall -Wextra -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wno-long-long -Wfloat-equal -Wmissing-format-attribute -Wpacked -Wdisabled-optimization -Wformat=2 -Wunreachable-code -Wendif-labels -Wdeclaration-after-statement -Wold-style-definition -Winvalid-pch -Wvariadic-macros -Wnonnull -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wunused-macros -Wunsafe-loop-optimizations -Wc++-compat -Wstrict-overflow -Wlogical-op -Wlarger-than=2048 -Wvla -Wsync-nand -Wframe-larger-than=16384 -Wpacked-bitfield-compat  -s -Wno-inline -Wno-aggregate-return -Wno-missing-noreturn -O3
                      AM C Flags: 
                Shared C Library: yes
                Static C Library: yes
@@ -49,13 +49,13 @@ Languages:
                             C++: no
 
                            Java: yes
-                  Java Compiler: /scratch/java/latest/bin/java (java 1.8.0_77)
+                  Java Compiler: /scratch/java/latest/bin/java (java 1.8.0_131)
 
 
 Features:
 ---------
                   Parallel HDF5: no
-             High-level library: no
+             High-level library: yes
                    Threadsafety: yes
             Default API mapping: v110
  With deprecated public symbols: yes

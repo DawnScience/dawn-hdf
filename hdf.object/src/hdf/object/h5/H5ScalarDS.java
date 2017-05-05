@@ -1779,8 +1779,7 @@ public class H5ScalarDS extends ScalarDS {
 
         byte[] refs = getPaletteRefs();
         long did = -1, pal_id = -1;
-        String[] paletteName = { "" };
-        long size = 100L;
+        String paletteName = null;
 
         if (refs == null) {
             return null;
@@ -1799,7 +1798,7 @@ public class H5ScalarDS extends ScalarDS {
         if (did >= 0) {
             try {
                 pal_id = H5.H5Rdereference(getFID(), HDF5Constants.H5P_DEFAULT, HDF5Constants.H5R_OBJECT, ref_buf);
-                H5.H5Iget_name(pal_id, paletteName, size);
+                paletteName = H5.H5Iget_name(pal_id);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
@@ -1810,7 +1809,7 @@ public class H5ScalarDS extends ScalarDS {
             }
         }
 
-        return paletteName[0];
+        return paletteName;
     }
 
     /*
