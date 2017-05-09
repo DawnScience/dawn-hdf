@@ -1,7 +1,22 @@
-hdf5 (ftp://ftp.hdfgroup.uiuc.edu/pub/outgoing/SWMR, 1.10.0),
+Compression libraries
+---------------------
+zlibc (zlib.net, 1.2.11)
+lz4 (https://github.com/lz4/lz4, 1.7.5)
+liblzf (http://oldhome.schmorp.de/marc/liblzf.html, 3.6)
+
+
+HDF5 library, Java bindings and classes
+---------------------------------------
+hdf5 (https://www.hdfgroup.org/downloads/hdf5/source-code/, 1.10.1),
 hdfview2-svn (http://svn.hdfgroup.uiuc.edu/hdfview/branches/hdfview-2, r59, 20150702)
-lz4 (https://github.com/Cyan4973/lz4, r131, 20150629)
-Dectris HDF5 plugin (https://github.com/dectris/HDF5Plugin, 20130903)
+
+
+Filters
+-------
+lz4  (https://github.com/nexusformat/HDF5-External-Filter-Plugins, 863db280bcb3a120849bcedd75426af6f55dce12)
+lzf, bitshuffle (https://github.com/kiyo-masui/bitshuffle, 762e5d7ef27ccc3d975546cc281609fb6464b563)
+
+All updated to use newer versions of compression libraries.
 
 (Note 32-bit OS no longer supported.)
 

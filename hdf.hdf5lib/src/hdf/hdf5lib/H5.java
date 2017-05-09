@@ -314,10 +314,10 @@ public class H5 implements java.io.Serializable {
                     throw new UnsatisfiedLinkError("Could not load Windows-specific dependencies");
                 }
             }
-            
+
             String libNameFormat = isWindows ?  "lib%s-100" : (osName.startsWith("Mac OS X") ? "%s.100" : "%s"); // need to do this to minimise build differences
             try {
-                // to need to preload dependent library (as its internal link is wrong most of the time)  
+                // to need to preload dependent library (as its internal link is wrong most of the time)
                 System.loadLibrary(String.format(libNameFormat, "hdf5"));
 
                 s_libraryName = String.format(libNameFormat, "hdf5_java");
@@ -368,6 +368,8 @@ public class H5 implements java.io.Serializable {
                 		log.info("Appending {} as plugin path", p);
                 		H5.H5PLappend(p);
                 		found = true;
+            			System.err.println("HDF5 plugin directory found in library path");
+            			log.info("HDF5 plugin directory found in library path");
             		} catch (HDF5LibraryException e) {
             			log.error("Could not add {} as plugin path", p, e);
             		}
