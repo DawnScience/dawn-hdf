@@ -4,10 +4,10 @@
 General Information:
 -------------------
                    HDF5 Version: 1.10.1
-                  Configured on: Fri May  5 10:22:49 BST 2017
-                  Configured by: src77879@ws167.diamond.ac.uk
+                  Configured on: Wed May 10 10:16:10 BST 2017
+                  Configured by: n/a
                     Host system: x86_64-unknown-linux-gnu
-              Uname information: Linux ws167.diamond.ac.uk 2.6.32-642.13.1.el6.x86_64 #1 SMP Wed Nov 23 16:03:01 EST 2016 x86_64 x86_64 x86_64 GNU/Linux
+              Uname information: Linux ws.diamond.ac.uk 2.6.32-696.1.1.el6.x86_64 #1 SMP Tue Mar 21 12:19:18 EDT 2017 x86_64 x86_64 x86_64 GNU/Linux
                        Byte sex: little-endian
              Installation point: /scratch/hdf/tmp
 
@@ -17,7 +17,7 @@ Compiling Options:
               Debugging Symbols: no
                         Asserts: no
                       Profiling: no
-             Optimization Level: high
+             Optimization Level: custom (-O2)
 
 Linking Options:
 ----------------
@@ -37,8 +37,8 @@ Languages:
                        CPPFLAGS: 
                     H5_CPPFLAGS: -D_GNU_SOURCE -D_POSIX_C_SOURCE=200112L   -DNDEBUG -UH5_DEBUG_API
                     AM_CPPFLAGS:  -I/scratch/hdf/tmp/include
-                        C Flags: -fPIC -msse4 -mavx
-                     H5 C Flags: -std=c99 -pedantic -Wall -Wextra -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wno-long-long -Wfloat-equal -Wmissing-format-attribute -Wpacked -Wdisabled-optimization -Wformat=2 -Wunreachable-code -Wendif-labels -Wdeclaration-after-statement -Wold-style-definition -Winvalid-pch -Wvariadic-macros -Wnonnull -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wunused-macros -Wunsafe-loop-optimizations -Wc++-compat -Wstrict-overflow -Wlogical-op -Wlarger-than=2048 -Wvla -Wsync-nand -Wframe-larger-than=16384 -Wpacked-bitfield-compat  -s -Wno-inline -Wno-aggregate-return -Wno-missing-noreturn -O3
+                        C Flags: 
+                     H5 C Flags: -std=c99 -pedantic -Wall -Wextra -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wno-long-long -Wfloat-equal -Wmissing-format-attribute -Wpacked -Wdisabled-optimization -Wformat=2 -Wunreachable-code -Wendif-labels -Wdeclaration-after-statement -Wold-style-definition -Winvalid-pch -Wvariadic-macros -Wnonnull -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wunused-macros -Wunsafe-loop-optimizations -Wc++-compat -Wstrict-overflow -Wlogical-op -Wlarger-than=2048 -Wvla -Wsync-nand -Wframe-larger-than=16384 -Wpacked-bitfield-compat  -s -Wno-inline -Wno-aggregate-return -Wno-missing-noreturn -O2
                      AM C Flags: 
                Shared C Library: yes
                Static C Library: yes
