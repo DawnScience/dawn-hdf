@@ -315,7 +315,7 @@ public class H5 implements java.io.Serializable {
                 }
             }
 
-            String libNameFormat = isWindows ?  "lib%s-100" : (osName.startsWith("Mac OS X") ? "%s.100" : "%s"); // need to do this to minimise build differences
+            String libNameFormat = isWindows ?  "lib%s-100" : (osName.startsWith("Mac OS X") ? "%s.101" : "%s"); // need to do this to minimise build differences
             try {
                 // to need to preload dependent library (as its internal link is wrong most of the time)
                 System.loadLibrary(String.format(libNameFormat, "hdf5"));
