@@ -358,7 +358,7 @@ public class H5 implements java.io.Serializable {
                 		log.info("Prepending {} as plugin path", p);
                 		H5.H5PLprepend(p);
                 		found = true;
-            			System.err.println("HDF5 plugin directory found in library path");
+            			System.err.println("HDF5 plugin directory found in library path: " + p);
             			log.info("HDF5 plugin directory found in library path");
             		} catch (HDF5LibraryException e) {
             			log.error("Could not add {} as plugin path", p, e);
