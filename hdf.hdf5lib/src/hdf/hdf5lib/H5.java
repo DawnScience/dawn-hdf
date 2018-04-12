@@ -355,8 +355,8 @@ public class H5 implements java.io.Serializable {
             for (String p : libPath.split(File.pathSeparator)) {
             	if (p.contains("hdf.hdf5lib")) {
                 	try {
-                		log.info("Appending {} as plugin path", p);
-                		H5.H5PLappend(p);
+                		log.info("Prepending {} as plugin path", p);
+                		H5.H5PLprepend(p);
                 		found = true;
             			System.err.println("HDF5 plugin directory found in library path");
             			log.info("HDF5 plugin directory found in library path");
@@ -384,8 +384,8 @@ public class H5 implements java.io.Serializable {
 						File f = new File(p).getCanonicalFile();
 						if (f.isFile()) {
 							p = f.getParent();
-							log.info("Appending {} as plugin path", p);
-							H5.H5PLappend(p);
+							log.info("Prepending {} as plugin path", p);
+							H5.H5PLprepend(p);
 							found = true;
 						}
 					} catch (HDF5LibraryException | IOException e) {
