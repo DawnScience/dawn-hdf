@@ -7,7 +7,7 @@ Bundle-Version: 1.10.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-NativeCode: lib/linux-x86_64/libhdf5.so; lib/linux-x86_64/libhdf5_java.so;
  osname=Linux; processor=x86_64,
- lib/win32-x86_64/hdf5-shared.dll; lib/win32-x86_64/hdf5_java-shared.dll;
+ lib/win32-x86_64/hdf5.dll; lib/win32-x86_64/hdf5_java.dll;
  osname=Win32; processor=x86_64,
  lib/macosx-x86_64/libhdf5.101.dylib; lib/macosx-x86_64/libhdf5_java.101.dylib;
  osname=macosx; osname=Mac OS X;  osname=MacOS; processor=x86_64,
