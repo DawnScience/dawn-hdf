@@ -13,7 +13,7 @@
 	</parent>
 	<groupId>org.eclipse</groupId>
 	<artifactId>hdf.hdf5lib</artifactId>
-	<version>1.10.2-SNAPSHOT</version>
+	<version>1.10.3-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	
 	<build>

@@ -7,7 +7,7 @@ liblzf (http://oldhome.schmorp.de/marc/liblzf.html, 3.6)
 
 HDF5 library, Java bindings and classes
 ---------------------------------------
-hdf5 (https://www.hdfgroup.org/downloads/hdf5/source-code/, 1.10.2)
+hdf5 (https://portal.hdfgroup.org/display/support/HDF5+1.10.3)
 
 Filters
 -------
