@@ -317,7 +317,7 @@ public class H5 implements java.io.Serializable {
         // else load standard library
         if (!isLibraryLoaded) {
             String osName = System.getProperty("os.name");
-            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.103" : "%s"; // need to do this to minimise build differences
+            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.104" : "%s"; // need to do this to minimise build differences
 
             try {
                 // to need to preload dependent library (as its internal link is wrong most of the time)

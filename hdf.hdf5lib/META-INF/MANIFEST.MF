@@ -10,7 +10,7 @@ Bundle-NativeCode: lib/linux-x86_64/libhdf5.so; lib/linux-x86_64/libhdf5_java.so
  lib/win32-x86_64/hdf5.dll; lib/win32-x86_64/hdf5_java.dll;
  osname=Win32; processor=x86_64,
  lib/macosx-x86_64/libhdf5.104.dylib; lib/macosx-x86_64/libhdf5_java.104.dylib;
- osname=macosx; osname=Mac OS X;  osname=MacOS; processor=x86_64,
+ osname=MacOSX; processor=x86_64,
  *
 Export-Package: hdf.hdf5lib,
  hdf.hdf5lib.callbacks,
