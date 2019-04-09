@@ -3,13 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: hdf.hdf5lib
 Bundle-SymbolicName: hdf.hdf5lib;singleton:=true
 Bundle-Vendor: The HDF Group
-Bundle-Version: 1.10.3.qualifier
+Bundle-Version: 1.10.5.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-NativeCode: lib/linux-x86_64/libhdf5.so; lib/linux-x86_64/libhdf5_java.so;
  osname=Linux; processor=x86_64,
  lib/win32-x86_64/hdf5.dll; lib/win32-x86_64/hdf5_java.dll;
  osname=Win32; processor=x86_64,
- lib/macosx-x86_64/libhdf5.104.dylib; lib/macosx-x86_64/libhdf5_java.104.dylib;
+ lib/macosx-x86_64/libhdf5.103.dylib; lib/macosx-x86_64/libhdf5_java.103.dylib;
  osname=MacOSX; processor=x86_64,
  *
 Export-Package: hdf.hdf5lib,
