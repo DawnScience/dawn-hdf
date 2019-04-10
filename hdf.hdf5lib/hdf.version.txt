@@ -17,4 +17,4 @@ blosc, (https://github.com/Blosc/hdf5-blosc.git, 1.0.0, bd8ee59708f366ac56115385
 
 All updated to use newer versions of compression libraries.
 
-(Note 32-bit OS no longer supported. lzf is known to crash on MS Windows 10).
+(Note 32-bit OS no longer supported.)
