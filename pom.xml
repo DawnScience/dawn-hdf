@@ -15,5 +15,6 @@
 
 	<modules>
 		<module>hdf.hdf5lib</module>
+		<module>hdf.hdf5lib.feature</module>
 	</modules>
 </project>
