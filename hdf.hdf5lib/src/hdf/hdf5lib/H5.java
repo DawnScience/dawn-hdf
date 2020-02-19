@@ -3632,7 +3632,7 @@ public class H5 implements java.io.Serializable {
 
     public synchronized static int H5Gget_obj_info_all(long loc_id, String name, String[] oname, int[] otype,
             int[] ltype, long[] fno, long[] ref, int indx_type) throws HDF5LibraryException, NullPointerException {
-        return H5Gget_obj_info_full(loc_id, name, oname, otype, ltype, fno, ref, oname.length, indx_type, -1);
+        return H5Gget_obj_info_full(loc_id, name, oname, otype, ltype, fno, ref, indx_type, -1);
     }
 
     public synchronized static int H5Gget_obj_info_full(long loc_id, String name, String[] oname, int[] otype,
