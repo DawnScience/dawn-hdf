@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: hdf.hdf5lib
 Bundle-SymbolicName: hdf.hdf5lib;singleton:=true
