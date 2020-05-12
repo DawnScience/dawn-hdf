@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="hdf.hdf5lib.feature"
-      label="HDF5 Java bindings"
+      label="HDF5 Java Bindings Feature"
       version="1.10.5.qualifier">
 
    <description url="https://gerrit.diamond.ac.uk/plugins/gitiles/scisoft/dawn-hdf">
