@@ -1,75 +1,91 @@
-	    SUMMARY OF THE HDF5 CONFIGURATION
-	    =================================
+        SUMMARY OF THE HDF5 CONFIGURATION
+        =================================
 
 General Information:
 -------------------
-                   HDF5 Version: 1.10.5
-                  Configured on: Tue Apr  9 16:45:45 BST 2019
-                  Configured by: n/a
-                    Host system: x86_64-unknown-linux-gnu
-              Uname information: Linux localhost 2.6.32-754.10.1.el6.x86_64 #1 SMP Thu Nov 29 15:44:01 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+                   HDF5 Version: 1.10.9.2
+                  Configured on: 2022-07-17
+                  Configured by: Unix Makefiles
+                    Host system: Linux-5.13.0-1031-azure
+              Uname information: Linux
                        Byte sex: little-endian
-             Installation point: /opt/hdf5/1.10.5
+             Installation point: /io/docker-base/build/hdf5/linux/x86_64
 
 Compiling Options:
 ------------------
-                     Build Mode: production
-              Debugging Symbols: no
-                        Asserts: no
-                      Profiling: no
-             Optimization Level: custom (-O2)
+                     Build Mode: RelWithDebInfo
+              Debugging Symbols: OFF
+                        Asserts: OFF
+                      Profiling: OFF
+             Optimization Level: OFF
 
 Linking Options:
 ----------------
-                      Libraries: static, shared
-  Statically Linked Executables: 
+                      Libraries: 
+  Statically Linked Executables: OFF
                         LDFLAGS: 
                      H5_LDFLAGS: 
-                     AM_LDFLAGS:  -L/opt/comp/lib
-                Extra libraries: -lrt -lpthread -lz -ldl -lm 
-                       Archiver: ar
-                       AR_FLAGS: cr
-                         Ranlib: ranlib
+                     AM_LDFLAGS: 
+                Extra libraries: m;dl
+                       Archiver: /opt/rh/devtoolset-10/root/usr/bin/ar
+                         Ranlib: /opt/rh/devtoolset-10/root/usr/bin/ranlib
 
 Languages:
 ----------
-                              C: yes
-                     C Compiler: /usr/bin/gcc ( gcc (GCC) 4.4.7 20120313 )
+                              C: YES
+                     C Compiler: /opt/rh/devtoolset-10/root/usr/bin/gcc 10.2.1
                        CPPFLAGS: 
-                    H5_CPPFLAGS: -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L   -DNDEBUG -UH5_DEBUG_API
-                    AM_CPPFLAGS:  -I/opt/comp/include
-                        C Flags: -fPIC -msse4
-                     H5 C Flags:  -std=c99  -pedantic -Wall -Wextra -Wbad-function-cast -Wc++-compat -Wcast-align -Wcast-qual -Wconversion -Wdeclaration-after-statement -Wdisabled-optimization -Wfloat-equal -Wformat=2 -Winit-self -Winvalid-pch -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros -Wunsafe-loop-optimizations -Wwrite-strings -Wno-long-long -Wstrict-overflow -Wlogical-op -Wlarger-than=2048 -Wvla -Wsync-nand -Wframe-larger-than=16384 -Wpacked-bitfield-compat  -s -Wno-inline -Wno-aggregate-return -Wno-missing-format-attribute -Wno-missing-noreturn -O2
-                     AM C Flags: 
-               Shared C Library: yes
-               Static C Library: yes
+                    H5_CPPFLAGS: 
+                    AM_CPPFLAGS: 
+                         CFLAGS:   -std=c99 -fPIC -O3 -m64 -msse4 -mavx2 -I/io/docker-base/build/opt/linux/x86_64/include -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64/include -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64/include/linux -fstdarg-opt -fdiagnostics-urls=never -fno-diagnostics-color -fmessage-length=0
+                      H5_CFLAGS: -Wall;-Wcast-qual;-Wconversion;-Wextra;-Wfloat-equal;-Wformat=2;-Winit-self;-Winvalid-pch;-Wmissing-include-dirs;-Wno-c++-compat;-Wno-format-nonliteral;-Wshadow;-Wundef;-Wwrite-strings;-pedantic;-Wbad-function-cast;-Wimplicit-function-declaration;-Wmissing-declarations;-Wmissing-prototypes;-Wnested-externs;-Wold-style-definition;-Wpacked;-Wpointer-sign;-Wpointer-to-int-cast;-Wredundant-decls;-Wstrict-prototypes;-Wswitch;-Wunused-function;-Wunused-variable;-Wunused-parameter;-Wcast-align;-Wunused-but-set-variable;-Wformat;-finline-functions;-Wno-aggregate-return;-Wno-inline;-Wno-missing-format-attribute;-Wno-missing-noreturn;-Wno-overlength-strings;-Wlarger-than=2560;-Wlogical-op;-Wframe-larger-than=16384;-Wpacked-bitfield-compat;-Wsync-nand;-Wstrict-overflow=5;-Wno-unsuffixed-float-constants;-Wdouble-promotion;-Wtrampolines;-Wstack-usage=8192;-Wmaybe-uninitialized;-Wno-jump-misses-init;-Wno-suggest-attribute=const;-Wno-suggest-attribute=noreturn;-Wno-suggest-attribute=pure;-Wno-suggest-attribute=format;-Wdate-time;-Warray-bounds=2;-Wc99-c11-compat;-Wincompatible-pointer-types;-Wshadow;-Wduplicated-cond;-Whsa;-Wnormalized;-Wnull-dereference;-Wunused-const-variable;-Walloca;-Walloc-zero;-Wduplicated-branches;-Wformat-overflow=2;-Wformat-truncation=1;-Wrestrict;-Wattribute-alias;-Wcast-align=strict;-Wshift-overflow=2;-Wcast-function-type;-Wmaybe-uninitialized;-Wno-suggest-attribute=cold;-Wno-suggest-attribute=malloc;-Wattribute-alias=2;-Wmissing-profile;-Wc11-c2x-compat
+                      AM_CFLAGS: 
+               Shared C Library: YES
+               Static C Library: YES
 
+                        Fortran: OFF
+               Fortran Compiler:  
+                  Fortran Flags: 
+               H5 Fortran Flags: 
+               AM Fortran Flags: 
+         Shared Fortran Library: YES
+         Static Fortran Library: YES
 
-                        Fortran: no
+                            C++: OFF
+                   C++ Compiler:  
+                      C++ Flags: 
+                   H5 C++ Flags: 
+                   AM C++ Flags: 
+             Shared C++ Library: YES
+             Static C++ Library: YES
 
-                            C++: no
-
-                           Java: yes
-                  Java Compiler: /opt/jdk1.8.0_181/bin/java (java 1.8.0_181)
-
+                            JAVA: ON
+                 JAVA Compiler: /usr/bin/javac 
 
 Features:
 ---------
-                   Parallel HDF5: no
-Parallel Filtered Dataset Writes: no
-              Large Parallel I/O: no
-              High-level library: yes
-                    Threadsafety: yes
+                   Parallel HDF5: OFF
+Parallel Filtered Dataset Writes: 
+              Large Parallel I/O: 
+              High-level library: off
+                Build HDF5 Tests: OFF
+                Build HDF5 Tools: ON
+     Build High-level HDF5 Tools: off
+                    Threadsafety: ON
              Default API mapping: v110
-  With deprecated public symbols: yes
-          I/O filters (external): deflate(zlib)
-                             MPE: no
-                      Direct VFD: no
-                         dmalloc: no
-  Packages w/ extra debug output: none
-                     API tracing: no
-            Using memory checker: no
- Memory allocation sanity checks: no
-          Function stack tracing: no
-       Strict file format checks: no
-    Optimization instrumentation: no
+  With deprecated public symbols: ON
+          I/O filters (external):  DEFLATE
+                             MPE: 
+                      Direct VFD: 
+                      Mirror VFD: 
+              (Read-Only) S3 VFD: 
+            (Read-Only) HDFS VFD: 
+                         dmalloc: 
+  Packages w/ extra debug output: 
+                     API Tracing: OFF
+            Using memory checker: OFF
+ Memory allocation sanity checks: OFF
+          Function Stack Tracing: OFF
+                Use file locking: best-effort
+       Strict File Format Checks: OFF
+    Optimization Instrumentation: 

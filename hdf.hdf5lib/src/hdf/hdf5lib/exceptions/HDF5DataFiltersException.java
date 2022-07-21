@@ -6,7 +6,7 @@
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
  * terms governing use, modification, and redistribution, is contained in    *
  * the COPYING file, which can be found at the root of the source code       *
- * distribution tree, or in https://support.hdfgroup.org/ftp/HDF5/releases.  *
+ * distribution tree, or in https://www.hdfgroup.org/licenses.               *
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -23,9 +23,7 @@ public class HDF5DataFiltersException extends HDF5LibraryException {
      * Constructs an <code>HDF5DataFiltersException</code> with no specified
      * detail message.
      */
-    public HDF5DataFiltersException() {
-        super();
-    }
+    public HDF5DataFiltersException() { super(); }
 
     /**
      * Constructs an <code>HDF5DataFiltersException</code> with the specified
@@ -34,7 +32,5 @@ public class HDF5DataFiltersException extends HDF5LibraryException {
      * @param s
      *            the detail message.
      */
-    public HDF5DataFiltersException(String s) {
-        super(s);
-    }
+    public HDF5DataFiltersException(String s) { super(s); }
 }

@@ -6,7 +6,7 @@
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
  * terms governing use, modification, and redistribution, is contained in    *
  * the COPYING file, which can be found at the root of the source code       *
- * distribution tree, or in https://support.hdfgroup.org/ftp/HDF5/releases.  *
+ * distribution tree, or in https://www.hdfgroup.org/licenses.               *
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -31,15 +31,16 @@ package hdf.hdf5lib.exceptions;
  *
  */
 public class HDF5Exception extends RuntimeException {
+    /**
+     *  the specified detail message of this exception
+     */
     protected String detailMessage;
 
     /**
      * Constructs an <code>HDF5Exception</code> with no specified detail
      * message.
      */
-    public HDF5Exception() {
-        super();
-    }
+    public HDF5Exception() { super(); }
 
     /**
      * Constructs an <code>HDF5Exception</code> with the specified detail
@@ -48,7 +49,8 @@ public class HDF5Exception extends RuntimeException {
      * @param message
      *            the detail message.
      */
-    public HDF5Exception(String message) {
+    public HDF5Exception(String message)
+    {
         super();
         detailMessage = message;
     }
@@ -60,7 +62,8 @@ public class HDF5Exception extends RuntimeException {
      *         have a detail message.
      */
     @Override
-    public String getMessage() {
+    public String getMessage()
+    {
         return detailMessage;
     }
 }

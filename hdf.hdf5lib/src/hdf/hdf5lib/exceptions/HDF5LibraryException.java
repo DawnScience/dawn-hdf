@@ -6,7 +6,7 @@
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
  * terms governing use, modification, and redistribution, is contained in    *
  * the COPYING file, which can be found at the root of the source code       *
- * distribution tree, or in https://support.hdfgroup.org/ftp/HDF5/releases.  *
+ * distribution tree, or in https://www.hdfgroup.org/licenses.               *
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -30,14 +30,17 @@ import hdf.hdf5lib.HDF5Constants;
 
 @SuppressWarnings("serial")
 public class HDF5LibraryException extends HDF5Exception {
+    /** major error number of the first error on the HDF5 library error stack. */
     private final long majorErrorNumber;
+    /** minor error number of the first error on the HDF5 library error stack. */
     private final long minorErrorNumber;
 
     /**
      * Constructs an <code>HDF5LibraryException</code> with no specified detail
      * message.
      */
-    public HDF5LibraryException() {
+    public HDF5LibraryException()
+    {
         super();
 
         // this code forces the loading of the HDF-5 library
@@ -50,7 +53,7 @@ public class HDF5LibraryException extends HDF5Exception {
 
         this.majorErrorNumber = _getMajorErrorNumber();
         this.minorErrorNumber = _getMinorErrorNumber();
-        detailMessage = getMinorError(minorErrorNumber);
+        detailMessage         = getMinorError(minorErrorNumber);
     }
 
     /**
@@ -60,7 +63,8 @@ public class HDF5LibraryException extends HDF5Exception {
      * @param s
      *            the detail message.
      */
-    public HDF5LibraryException(String s) {
+    public HDF5LibraryException(String s)
+    {
         super(s);
         // this code forces the loading of the HDF-5 library
         // to assure that the native methods are available
@@ -79,10 +83,7 @@ public class HDF5LibraryException extends HDF5Exception {
      *
      * @return the major error number
      */
-    public long getMajorErrorNumber()
-    {
-        return majorErrorNumber;
-    }
+    public long getMajorErrorNumber() { return majorErrorNumber; }
     private native long _getMajorErrorNumber();
 
     /**
@@ -91,10 +92,7 @@ public class HDF5LibraryException extends HDF5Exception {
      *
      * @return the minor error number
      */
-    public long getMinorErrorNumber()
-    {
-        return minorErrorNumber;
-    }
+    public long getMinorErrorNumber() { return minorErrorNumber; }
     private native long _getMinorErrorNumber();
 
     /**
@@ -107,12 +105,13 @@ public class HDF5LibraryException extends HDF5Exception {
      *
      * @return the string of the minor error
      */
-    public String getMinorError(long err_code) {
+    public String getMinorError(long err_code)
+    {
         if (err_code == 0) {
             return "special zero no error";
         }
         else if (err_code == HDF5Constants.H5E_UNINITIALIZED) {
-            return "information is unitialized";
+            return "information is uninitialized";
         }
         else if (err_code == HDF5Constants.H5E_UNSUPPORTED) {
             return "feature is unsupported";
@@ -262,7 +261,7 @@ public class HDF5LibraryException extends HDF5Exception {
             return "unrecognized message";
         }
         else if (err_code == HDF5Constants.H5E_CANTDELETE) {
-            return " Can't delete message";
+            return "Can't delete message";
         }
         else if (err_code == HDF5Constants.H5E_CANTOPENOBJ) {
             return "Can't open object";
@@ -351,9 +350,10 @@ public class HDF5LibraryException extends HDF5Exception {
      * stack, and and the Java stack trace to the standard error stream.
      */
     @Override
-    public void printStackTrace() {
+    public void printStackTrace()
+    {
         System.err.println(this);
-        printStackTrace0(null); // the HDF-5 Library error stack
+        printStackTrace0(null);  // the HDF-5 Library error stack
         super.printStackTrace(); // the Java stack trace
     }
 
@@ -364,21 +364,21 @@ public class HDF5LibraryException extends HDF5Exception {
      * @param f
      *            the file print stream.
      */
-    public void printStackTrace(java.io.File f) {
+    public void printStackTrace(java.io.File f)
+    {
         if ((f == null) || !f.exists() || f.isDirectory() || !f.canWrite()) {
             printStackTrace();
         }
         else {
             try {
                 java.io.FileOutputStream o = new java.io.FileOutputStream(f);
-                java.io.PrintWriter p = new java.io.PrintWriter(o);
+                java.io.PrintWriter p      = new java.io.PrintWriter(o);
                 p.println(this);
                 p.close();
             }
             catch (Exception ex) {
                 System.err.println(this);
-            }
-            ;
+            };
             // the HDF-5 Library error stack
             printStackTrace0(f.getPath());
             super.printStackTrace(); // the Java stack trace
@@ -390,5 +390,4 @@ public class HDF5LibraryException extends HDF5Exception {
      * and error stack.
      */
     private native void printStackTrace0(String s);
-
 }

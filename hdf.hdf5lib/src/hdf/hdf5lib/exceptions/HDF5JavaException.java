@@ -6,7 +6,7 @@
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
  * terms governing use, modification, and redistribution, is contained in    *
  * the COPYING file, which can be found at the root of the source code       *
- * distribution tree, or in https://support.hdfgroup.org/ftp/HDF5/releases.  *
+ * distribution tree, or in https://www.hdfgroup.org/licenses.               *
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -26,9 +26,7 @@ public class HDF5JavaException extends HDF5Exception {
      * Constructs an <code>HDF5JavaException</code> with no specified detail
      * message.
      */
-    public HDF5JavaException() {
-        super();
-    }
+    public HDF5JavaException() { super(); }
 
     /**
      * Constructs an <code>HDF5JavaException</code> with the specified detail
@@ -37,7 +35,5 @@ public class HDF5JavaException extends HDF5Exception {
      * @param s
      *            the detail message.
      */
-    public HDF5JavaException(String s) {
-        super(s);
-    }
+    public HDF5JavaException(String s) { super(s); }
 }
