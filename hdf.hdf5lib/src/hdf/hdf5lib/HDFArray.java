@@ -1,6 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Copyright by The HDF Group.                                               *
- * Copyright by the Board of Trustees of the University of Illinois.         *
  * All rights reserved.                                                      *
  *                                                                           *
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
@@ -15,17 +14,19 @@ package hdf.hdf5lib;
 
 import java.util.Arrays;
 
+import hdf.hdf5lib.exceptions.HDF5Exception;
 import hdf.hdf5lib.exceptions.HDF5JavaException;
 
 /**
+ * @page HDFARRAY Java Array Conversion
  * This is a class for handling multidimensional arrays for HDF.
  * <p>
  * The purpose is to allow the storage and retrieval of arbitrary array types containing scientific data.
  * <p>
  * The methods support the conversion of an array to and from Java to a one-dimensional array of bytes
- * suitable for I/O by the C library. <p> This class heavily uses the <a
- * href="./hdf.hdf5lib.HDFNativeData.html">HDFNativeData</a> class to convert between Java and C
- * representations.
+ * suitable for I/O by the C library. <p> This class heavily uses the
+ * @ref HDFNATIVE
+ * class to convert between Java and C representations.
  */
 
 public class HDFArray {
@@ -50,9 +51,8 @@ public class HDFArray {
     {
         if (anArray == null) {
             HDF5JavaException ex = new HDF5JavaException("HDFArray: array is null?: ");
-            throw(ex);
         }
-        Class<?> tc = anArray.getClass();
+        Class tc = anArray.getClass();
         if (tc.isArray() == false) {
             /* exception: not an array */
             HDF5JavaException ex = new HDF5JavaException("HDFArray: not an array?: ");
@@ -590,7 +590,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Integer[] ByteToInteger(int start, int len, byte[] bin)
     {
         int in[]      = HDFNativeData.byteToInt(start, len, bin);
@@ -602,7 +601,7 @@ public class HDFArray {
         }
         return out;
     }
- */
+
     private byte[] ShortToByte(Short in[])
     {
         int nelems  = java.lang.reflect.Array.getLength(in);
@@ -626,7 +625,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Short[] ByteToShort(int start, int len, byte[] bin)
     {
         short in[]  = (short[])HDFNativeData.byteToShort(start, len, bin);
@@ -638,7 +636,6 @@ public class HDFArray {
         }
         return out;
     }
- */
 
     private byte[] ByteObjToByte(Byte in[])
     {
@@ -662,7 +659,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Byte[] ByteToByteObj(int start, int len, byte[] bin)
     {
         Byte[] out = new Byte[len];
@@ -672,7 +668,6 @@ public class HDFArray {
         }
         return out;
     }
- */
 
     private byte[] FloatObjToByte(Float in[])
     {
@@ -697,7 +692,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Float[] ByteToFloatObj(int start, int len, byte[] bin)
     {
         float in[]  = (float[])HDFNativeData.byteToFloat(start, len, bin);
@@ -709,7 +703,6 @@ public class HDFArray {
         }
         return out;
     }
- */
 
     private byte[] DoubleObjToByte(Double in[])
     {
@@ -734,7 +727,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Double[] ByteToDoubleObj(int start, int len, byte[] bin)
     {
         double in[]  = (double[])HDFNativeData.byteToDouble(start, len, bin);
@@ -746,7 +738,6 @@ public class HDFArray {
         }
         return out;
     }
- */
 
     private byte[] LongObjToByte(Long in[])
     {
@@ -771,7 +762,6 @@ public class HDFArray {
         return out;
     }
 
-/*
     private Long[] ByteToLongObj(int start, int len, byte[] bin)
     {
         long in[]  = (long[])HDFNativeData.byteToLong(start, len, bin);
@@ -783,7 +773,6 @@ public class HDFArray {
         }
         return out;
     }
- */
 }
 
 /**
@@ -793,7 +782,7 @@ public class HDFArray {
  */
 class ArrayDescriptor {
     static String theType     = "";
-    static Class<?> theClass     = null;
+    static Class theClass     = null;
     static int[] dimlen       = null;
     static int[] dimstart     = null;
     static int[] currentindex = null;
@@ -808,7 +797,7 @@ class ArrayDescriptor {
 
     public ArrayDescriptor(Object anArray) throws HDF5JavaException
     {
-        Class<?> tc = anArray.getClass();
+        Class tc = anArray.getClass();
         if (tc.isArray() == false) {
             /* exception: not an array */
             HDF5JavaException ex = new HDF5JavaException("ArrayDescriptor: not an array?: ");
@@ -834,8 +823,8 @@ class ArrayDescriptor {
         }
 
         String css  = ss.substring(ss.lastIndexOf('[') + 1);
-//        Class<?> compC = tc.getComponentType();
-//        String cs   = compC.toString();
+        Class compC = tc.getComponentType();
+        String cs   = compC.toString();
         NT          = c; /* must be B,S,I,L,F,D, else error */
         if (NT == 'B') {
             NTsize = 1;
@@ -944,7 +933,7 @@ class ArrayDescriptor {
                            " elements)");
         int i;
         for (i = 0; i <= dims; i++) {
-            Class<?> tc  = objs[i].getClass();
+            Class tc  = objs[i].getClass();
             String ss = tc.toString();
             System.out.println(i + ":  start " + dimstart[i] + ": len " + dimlen[i] + " current " +
                                currentindex[i] + " bytetoindex " + bytetoindex[i] + " object " + objs[i] +
