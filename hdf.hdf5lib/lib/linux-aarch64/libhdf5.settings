@@ -3,17 +3,17 @@
 
 General Information:
 -------------------
-                   HDF5 Version: 1.10.10
-                  Configured on: 2023-05-12
+                   HDF5 Version: 1.10.11
+                  Configured on: 2023-10-11
                   Configured by: Unix Makefiles
-                    Host system: Linux-5.15.0-1037-azure
+                    Host system: Linux-6.2.0-1012-azure
               Uname information: Linux
                        Byte sex: little-endian
              Installation point: /io/docker-base/build/hdf5/linux/aarch64
 
 Compiling Options:
 ------------------
-                     Build Mode: RelWithDebInfo
+                     Build Mode: Release
               Debugging Symbols: OFF
                         Asserts: OFF
                       Profiling: OFF
@@ -28,6 +28,7 @@ Linking Options:
                      AM_LDFLAGS: 
                 Extra libraries: m;dl
                        Archiver: /opt/rh/devtoolset-10/root/usr/bin/ar
+                       AR_FLAGS: 
                          Ranlib: /opt/rh/devtoolset-10/root/usr/bin/ranlib
 
 Languages:
@@ -50,7 +51,7 @@ Languages:
                AM Fortran Flags: 
          Shared Fortran Library: YES
          Static Fortran Library: YES
-               Module Directory: /io/hdf5-1.10.10/hdf5-build/mod
+               Module Directory: /io/hdf5-1.10.11/hdf5-build/mod
 
                             C++: OFF
                    C++ Compiler:  
@@ -60,32 +61,32 @@ Languages:
              Shared C++ Library: YES
              Static C++ Library: YES
 
-                            JAVA: ON
-                 JAVA Compiler: /usr/bin/javac 
+                           JAVA: ON
+                  JAVA Compiler: /usr/bin/javac 
 
 Features:
 ---------
-                   Parallel HDF5: OFF
-Parallel Filtered Dataset Writes: 
-              Large Parallel I/O: 
-              High-level library: OFF
-                Build HDF5 Tests: OFF
-                Build HDF5 Tools: ON
-     Build High-level HDF5 Tools: OFF
-                    Threadsafety: ON
-             Default API mapping: v110
-  With deprecated public symbols: ON
-          I/O filters (external):  DEFLATE
-                             MPE: 
-                      Direct VFD: 
-                      Mirror VFD: 
-              (Read-Only) S3 VFD: 
-            (Read-Only) HDFS VFD: 
-  Packages w/ extra debug output: 
-                     API Tracing: OFF
-            Using memory checker: OFF
- Memory allocation sanity checks: OFF
-          Function Stack Tracing: OFF
-                Use file locking: best-effort
-       Strict File Format Checks: OFF
-    Optimization Instrumentation: 
+                     Parallel HDF5: OFF
+  Parallel Filtered Dataset Writes: 
+                Large Parallel I/O: 
+                High-level library: OFF
+                  Build HDF5 Tests: OFF
+                  Build HDF5 Tools: ON
+                   Build GIF Tools: 
+                      Threadsafety: ON
+               Default API mapping: v110
+    With deprecated public symbols: ON
+            I/O filters (external):  DEFLATE
+                               MPE: 
+                        Direct VFD: 
+                        Mirror VFD: 
+                (Read-Only) S3 VFD: 
+              (Read-Only) HDFS VFD: 
+    Packages w/ extra debug output: 
+                       API Tracing: OFF
+              Using memory checker: OFF
+   Memory allocation sanity checks: OFF
+            Function Stack Tracing: OFF
+                  Use file locking: best-effort
+         Strict File Format Checks: OFF
+      Optimization Instrumentation: 
