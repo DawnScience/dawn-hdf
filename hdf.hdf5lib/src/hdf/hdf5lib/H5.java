@@ -26,9 +26,9 @@ import hdf.hdf5lib.callbacks.H5D_iterate_cb;
 import hdf.hdf5lib.callbacks.H5D_iterate_t;
 import hdf.hdf5lib.callbacks.H5E_walk_cb;
 import hdf.hdf5lib.callbacks.H5E_walk_t;
-import hdf.hdf5lib.callbacks.H5L_iterate_cb;
+import hdf.hdf5lib.callbacks.H5L_iterate_opdata_t;
 import hdf.hdf5lib.callbacks.H5L_iterate_t;
-import hdf.hdf5lib.callbacks.H5O_iterate_cb;
+import hdf.hdf5lib.callbacks.H5O_iterate_opdata_t;
 import hdf.hdf5lib.callbacks.H5O_iterate_t;
 import hdf.hdf5lib.callbacks.H5P_cls_close_func_cb;
 import hdf.hdf5lib.callbacks.H5P_cls_close_func_t;
@@ -57,6 +57,8 @@ import hdf.hdf5lib.structs.H5F_info2_t;
 import hdf.hdf5lib.structs.H5G_info_t;
 import hdf.hdf5lib.structs.H5L_info_t;
 import hdf.hdf5lib.structs.H5O_info_t;
+import hdf.hdf5lib.structs.H5O_native_info_t;
+import hdf.hdf5lib.structs.H5O_token_t;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -232,7 +234,7 @@ import org.slf4j.LoggerFactory;
  * which prints out the HDF5 error stack, as described in the HDF5 C API <i><b>@ref H5Eprint()</b>.</i> This
  * may be used by Java exception handlers to print out the HDF5 error stack. <hr>
  *
- * @version HDF5 1.10.10 <br />
+ * @version HDF5 1.14.2 <BR>
  *          <b>See also: </b>
  *          @ref HDFARRAY hdf.hdf5lib.HDFArray<br />
  *          @ref HDF5CONST hdf.hdf5lib.HDF5Constants<br />
@@ -274,7 +276,7 @@ public class H5 implements java.io.Serializable {
      * </ul>
      * Make sure to update the versions number when a different library is used.
      */
-    public final static int LIB_VERSION[] = {1, 10, 11};
+    public final static int LIB_VERSION[] = {1, 14, 2};
 
     /**
      * @ingroup JH5
@@ -358,7 +360,7 @@ public class H5 implements java.io.Serializable {
         // else load standard library
         if (!isLibraryLoaded) {
             String osName = System.getProperty("os.name");
-            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.103" : "%s"; // need to do this to minimise build differences
+            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.310" : "%s"; // need to do this to minimise build differences
             try {
                 // to need to preload dependent library (as its internal link is wrong most of the time)
                 System.loadLibrary(String.format(libNameFormat, "hdf5"));
@@ -671,35 +673,6 @@ public class H5 implements java.io.Serializable {
      **/
     public synchronized static native void H5export_dataset(String file_export_name, long file_id,
                                                             String object_path, int binary_order)
-        throws HDF5LibraryException;
-
-    /**
-     * @ingroup JH5
-     *
-     * H5export_dataset is a utility function to save data in a file.
-     *
-     * @param file_export_name
-     *            The file name to export data into.
-     * @param file_name
-     *            The name of the HDF5 file containing the dataset.
-     * @param object_path
-     *            The full path of the dataset to be exported.
-     * @param binary_order
-     *            99 - export data as text.
-     *            1 - export data as binary Native Order.
-     *            2 - export data as binary Little Endian.
-     *            3 - export data as binary Big Endian.
-     *
-     * @exception HDF5LibraryException
-     *            Error from the HDF5 Library.
-     **/
-    public static void H5export_dataset(String file_export_name, String file_name, String object_path,
-                                        int binary_order) throws HDF5LibraryException
-    {
-        _H5export_dataset_string(file_export_name, file_name, object_path, binary_order);
-    }
-    private synchronized static native void
-    _H5export_dataset_string(String file_export_name, String file_name, String object_path, int binary_order)
         throws HDF5LibraryException;
 
     /**
@@ -3672,7 +3645,10 @@ public class H5 implements java.io.Serializable {
      *            Error from the HDF5 Library.
      * @exception NullPointerException
      *            buf is null.
+     *
+     * @deprecated As of HDF5 1.12.0 in favor of H5Treclaim
      **/
+    @Deprecated
     public synchronized static native int H5Dvlen_reclaim(long type_id, long space_id, long xfer_plist_id,
                                                           byte[] buf)
         throws HDF5LibraryException, NullPointerException;
@@ -4764,6 +4740,36 @@ public class H5 implements java.io.Serializable {
 
     // ////////////////////////////////////////////////////////////
     // //
+    // H5ES: Event Set Interface Functions //
+    // //
+    // ////////////////////////////////////////////////////////////
+    /**
+     *
+     * @defgroup JH5ES Java Event Set (H5ES) Interface
+     *
+     * @see H5ES, C-API
+     *
+     * @see @ref H5ES_UG, User Guide
+     */
+
+    // /////// unimplemented ////////
+    // H5_DLL hid_t H5EScreate(void);
+    // H5_DLL herr_t H5ESwait(hid_t es_id, uint64_t timeout, size_t *num_in_progress, hbool_t *err_occurred);
+    // H5_DLL herr_t H5EScancel(hid_t es_id, size_t *num_not_canceled, hbool_t *err_occurred);
+    // H5_DLL herr_t H5ESget_count(hid_t es_id, size_t *count);
+    // H5_DLL herr_t H5ESget_op_counter(hid_t es_id, uint64_t *counter);
+    // H5_DLL herr_t H5ESget_err_status(hid_t es_id, hbool_t *err_occurred);
+    // H5_DLL herr_t H5ESget_err_count(hid_t es_id, size_t *num_errs);
+    // H5_DLL herr_t H5ESget_err_info(hid_t es_id, size_t num_err_info, H5ES_err_info_t err_info[],
+    //                                size_t *err_cleared);
+    // H5_DLL herr_t H5ESfree_err_info(size_t num_err_info, H5ES_err_info_t err_info[]);
+    // H5_DLL herr_t H5ESregister_insert_func(hid_t es_id, H5ES_event_insert_func_t func, void *ctx);
+    // H5_DLL herr_t H5ESregister_complete_func(hid_t es_id, H5ES_event_complete_func_t func, void *ctx);
+    // H5_DLL herr_t H5ESclose(hid_t es_id);
+    //
+
+    // ////////////////////////////////////////////////////////////
+    // //
     // H5F: File Interface Functions //
     // //
     // ////////////////////////////////////////////////////////////
@@ -5045,6 +5051,21 @@ public class H5 implements java.io.Serializable {
     /**
      * @ingroup JH5F
      *
+     * H5Fget_fileno retrieves the "file number" for an open file.
+     *
+     * @param file_id
+     *            IN: File identifier for a currently-open HDF5 file
+     *
+     * @return the unique file number for the file.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5Fget_fileno(long file_id) throws HDF5LibraryException;
+
+    /**
+     * @ingroup JH5F
+     *
      * H5Fget_mdc_hit_rate queries the metadata cache of the target file to obtain its hit rate (cache hits /
      * (cache hits + cache misses)) since the last time hit rate statistics were reset.
      *
@@ -5165,8 +5186,31 @@ public class H5 implements java.io.Serializable {
      *            Error from the HDF5 Library.
      * @exception NullPointerException
      *            name is null.
+     *
+     * @deprecated As of HDF5 1.10.5 in favor of H5Fis_accessible.
      **/
+    @Deprecated
     public synchronized static native boolean H5Fis_hdf5(String name)
+        throws HDF5LibraryException, NullPointerException;
+
+    /**
+     * @ingroup JH5F
+     *
+     * H5Fis_accessible determines if the file can be opened with the given fapl.
+     *
+     * @param name
+     *            IN: File name to check.
+     * @param fapl_id
+     *            IN: File access property list identifier
+     *
+     * @return true if file is accessible, false if not.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public synchronized static native boolean H5Fis_accessible(String name, long fapl_id)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -5684,8 +5728,8 @@ public class H5 implements java.io.Serializable {
      *            OUT: Names of all objects under the group, name.
      * @param objTypes
      *            OUT: Types of all objects under the group, name.
-     * @param objRef
-     *            OUT: Reference number of all objects under the group, name.
+     * @param tokens
+     *            OUT: Object token of all objects under the group, name.
      *
      * @return the number of items found
      *
@@ -5695,14 +5739,14 @@ public class H5 implements java.io.Serializable {
      *            name is null.
      */
     public synchronized static int H5Gget_obj_info_all(long loc_id, String name, String[] objNames,
-                                                       int[] objTypes, long[] objRef)
+                                                       int[] objTypes, H5O_token_t[] tokens)
         throws HDF5LibraryException, NullPointerException
     {
         if (objNames == null) {
             throw new NullPointerException("H5Gget_obj_info_all(): name array is null");
         }
 
-        return H5Gget_obj_info_all(loc_id, name, objNames, objTypes, null, null, objRef,
+        return H5Gget_obj_info_all(loc_id, name, objNames, objTypes, null, null, tokens,
                                    HDF5Constants.H5_INDEX_NAME);
     }
 
@@ -5722,8 +5766,8 @@ public class H5 implements java.io.Serializable {
      *            OUT: Types of all objects under the group, name.
      * @param ltype
      *            OUT: Link type
-     * @param objRef
-     *            OUT: Reference number of all objects under the group, name.
+     * @param tokens
+     *            OUT: Object token of all objects under the group, name.
      * @param indx_type
      *            IN: Index type for iterate
      *
@@ -5735,11 +5779,11 @@ public class H5 implements java.io.Serializable {
      *            name is null.
      */
     public synchronized static int H5Gget_obj_info_all(long loc_id, String name, String[] objNames,
-                                                       int[] objTypes, int[] ltype, long[] objRef,
+                                                       int[] objTypes, int[] ltype, H5O_token_t[] tokens,
                                                        int indx_type)
         throws HDF5LibraryException, NullPointerException
     {
-        return H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, null, objRef, indx_type, -1);
+        return H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, null, tokens, indx_type, -1);
     }
 
     /**
@@ -5760,8 +5804,8 @@ public class H5 implements java.io.Serializable {
      *            OUT: Link type
      * @param fno
      *            OUT: File number
-     * @param objRef
-     *            OUT: Reference number of all objects under the group, name.
+     * @param tokens
+     *            OUT: Object token of all objects under the group, name.
      * @param indx_type
      *            IN: Index type for iterate
      *
@@ -5773,11 +5817,11 @@ public class H5 implements java.io.Serializable {
      *            name is null.
      */
     public synchronized static int H5Gget_obj_info_all(long loc_id, String name, String[] objNames,
-                                                       int[] objTypes, int[] ltype, long[] fno, long[] objRef,
-                                                       int indx_type)
+                                                       int[] objTypes, int[] ltype, long[] fno,
+                                                       H5O_token_t[] tokens, int indx_type)
         throws HDF5LibraryException, NullPointerException
     {
-        return H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, fno, objRef, indx_type, -1);
+        return H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, fno, tokens, indx_type, -1);
     }
 
     /**
@@ -5798,8 +5842,8 @@ public class H5 implements java.io.Serializable {
      *            OUT: Link type
      * @param fno
      *            OUT: File number
-     * @param objRef
-     *            OUT: Reference number of all objects under the group, name.
+     * @param tokens
+     *            OUT: Object token of all objects under the group, name.
      * @param indx_type
      *            IN: Index type for iterate
      * @param indx_order
@@ -5814,7 +5858,7 @@ public class H5 implements java.io.Serializable {
      */
     public synchronized static int H5Gget_obj_info_full(long loc_id, String name, String[] objNames,
                                                         int[] objTypes, int[] ltype, long[] fno,
-                                                        long[] objRef, int indx_type, int indx_order)
+                                                        H5O_token_t[] tokens, int indx_type, int indx_order)
         throws HDF5LibraryException, NullPointerException
     {
         if (objNames == null) {
@@ -5837,7 +5881,7 @@ public class H5 implements java.io.Serializable {
             ltype = new int[objTypes.length];
 
         if (fno == null)
-            fno = new long[objRef.length];
+            fno = new long[tokens.length];
 
         if (indx_type < 0)
             indx_type = HDF5Constants.H5_INDEX_NAME;
@@ -5846,7 +5890,7 @@ public class H5 implements java.io.Serializable {
             indx_order = HDF5Constants.H5_ITER_INC;
 
         log.trace("H5Gget_obj_info_full: objNames_len={}", objNames.length);
-        int status = H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, fno, objRef,
+        int status = H5Gget_obj_info_full(loc_id, name, objNames, objTypes, ltype, fno, tokens,
                                           objNames.length, indx_type, indx_order);
         for (int indx = 0; indx < objNames.length; indx++)
             log.trace("H5Gget_obj_info_full: objNames={}", objNames[indx]);
@@ -5855,7 +5899,7 @@ public class H5 implements java.io.Serializable {
 
     private synchronized static native int
     H5Gget_obj_info_full(long loc_id, String name, String[] objNames, int[] objTypes, int[] ltype, long[] fno,
-                         long[] objRef, int n, int indx_type, int indx_order)
+                         H5O_token_t[] tokens, int n, int indx_type, int indx_order)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -5916,8 +5960,8 @@ public class H5 implements java.io.Serializable {
      *            OUT: Types of all objects under the group, name.
      * @param lnkTypes
      *            OUT: Types of all links under the group, name.
-     * @param objRef
-     *            OUT: Reference number of all objects under the group, name.
+     * @param objToken
+     *            OUT: Object token of all objects under the group, name.
      * @param objMax
      *            IN: Maximum number of all objects under the group, name.
      *
@@ -5929,7 +5973,7 @@ public class H5 implements java.io.Serializable {
      *            name is null.
      */
     public synchronized static int H5Gget_obj_info_max(long loc_id, String[] objNames, int[] objTypes,
-                                                       int[] lnkTypes, long[] objRef, long objMax)
+                                                       int[] lnkTypes, H5O_token_t[] objToken, long objMax)
         throws HDF5LibraryException, NullPointerException
     {
         if (objNames == null) {
@@ -5956,11 +6000,12 @@ public class H5 implements java.io.Serializable {
             throw new HDF5LibraryException("H5Gget_obj_info_max(): name and type array sizes are different");
         }
 
-        return H5Gget_obj_info_max(loc_id, objNames, objTypes, lnkTypes, objRef, objMax, objNames.length);
+        return H5Gget_obj_info_max(loc_id, objNames, objTypes, lnkTypes, objToken, objMax, objNames.length);
     }
 
     private synchronized static native int H5Gget_obj_info_max(long loc_id, String[] oname, int[] otype,
-                                                               int[] ltype, long[] ref, long amax, int n)
+                                                               int[] ltype, H5O_token_t[] tokens, long amax,
+                                                               int n)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -6345,11 +6390,18 @@ public class H5 implements java.io.Serializable {
 
     // hid_t H5Iregister(H5I_type_t type, const void *object);
 
+    // typedef herr_t (*H5I_free_t)(void *);
     // H5I_type_t H5Iregister_type(size_t hash_size, unsigned reserved, H5I_free_t free_func);
 
     // void *H5Iremove_verify(hid_t id, H5I_type_t id_type);
 
+    // Type of the function to compare objects & keys
+    // typedef int (*H5I_search_func_t)(void *obj, hid_t id, void *key);
     // void *H5Isearch(H5I_type_t type, H5I_search_func_t func, void *key);
+
+    // Type of the H5Iiterate callback function
+    // typedef herr_t (*H5I_iterate_func_t)(hid_t id, void *udata);
+    // herr_t H5Iiterate(H5I_type_t type, H5I_iterate_func_t op, void *op_data);
 
     // //////////////////////////////////////////////////////////////////
     // H5L: Link Interface Functions //
@@ -6708,7 +6760,7 @@ public class H5 implements java.io.Serializable {
      *            Error from the HDF5 Library.
      **/
     public synchronized static native int H5Literate(long grp_id, int idx_type, int order, long idx,
-                                                     H5L_iterate_cb op, H5L_iterate_t op_data)
+                                                     H5L_iterate_t op, H5L_iterate_opdata_t op_data)
         throws HDF5LibraryException;
 
     /**
@@ -6742,8 +6794,8 @@ public class H5 implements java.io.Serializable {
      *            group_name is null.
      **/
     public synchronized static native int H5Literate_by_name(long grp_id, String group_name, int idx_type,
-                                                             int order, long idx, H5L_iterate_cb op,
-                                                             H5L_iterate_t op_data, long lapl_id)
+                                                             int order, long idx, H5L_iterate_t op,
+                                                             H5L_iterate_opdata_t op_data, long lapl_id)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -6795,8 +6847,8 @@ public class H5 implements java.io.Serializable {
      * @exception HDF5LibraryException
      *            Error from the HDF5 Library.
      **/
-    public synchronized static native int H5Lvisit(long grp_id, int idx_type, int order, H5L_iterate_cb op,
-                                                   H5L_iterate_t op_data) throws HDF5LibraryException;
+    public synchronized static native int H5Lvisit(long grp_id, int idx_type, int order, H5L_iterate_t op,
+                                                   H5L_iterate_opdata_t op_data) throws HDF5LibraryException;
 
     /**
      * @ingroup JH5L
@@ -6827,8 +6879,8 @@ public class H5 implements java.io.Serializable {
      *            group_name is null.
      **/
     public synchronized static native int H5Lvisit_by_name(long loc_id, String group_name, int idx_type,
-                                                           int order, H5L_iterate_cb op,
-                                                           H5L_iterate_t op_data, long lapl_id)
+                                                           int order, H5L_iterate_t op,
+                                                           H5L_iterate_opdata_t op_data, long lapl_id)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -7283,8 +7335,8 @@ public class H5 implements java.io.Serializable {
      * @exception NullPointerException
      *            name is null.
      **/
-    public static int H5Ovisit(long obj_id, int idx_type, int order, H5O_iterate_cb op, H5O_iterate_t op_data)
-        throws HDF5LibraryException, NullPointerException
+    public static int H5Ovisit(long obj_id, int idx_type, int order, H5O_iterate_t op,
+                               H5O_iterate_opdata_t op_data) throws HDF5LibraryException, NullPointerException
     {
         return H5Ovisit(obj_id, idx_type, order, op, op_data, HDF5Constants.H5O_INFO_ALL);
     }
@@ -7316,8 +7368,8 @@ public class H5 implements java.io.Serializable {
      * @exception NullPointerException
      *            name is null.
      **/
-    public synchronized static native int H5Ovisit(long obj_id, int idx_type, int order, H5O_iterate_cb op,
-                                                   H5O_iterate_t op_data, int fields)
+    public synchronized static native int H5Ovisit(long obj_id, int idx_type, int order, H5O_iterate_t op,
+                                                   H5O_iterate_opdata_t op_data, int fields)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -7350,7 +7402,7 @@ public class H5 implements java.io.Serializable {
      *            name is null.
      **/
     public static int H5Ovisit_by_name(long loc_id, String obj_name, int idx_type, int order,
-                                       H5O_iterate_cb op, H5O_iterate_t op_data, long lapl_id)
+                                       H5O_iterate_t op, H5O_iterate_opdata_t op_data, long lapl_id)
         throws HDF5LibraryException, NullPointerException
     {
         return H5Ovisit_by_name(loc_id, obj_name, idx_type, order, op, op_data, HDF5Constants.H5O_INFO_ALL,
@@ -7388,9 +7440,9 @@ public class H5 implements java.io.Serializable {
      * @exception NullPointerException
      *            name is null.
      **/
-    public synchronized static native int H5Ovisit_by_name(long loc_id, String obj_name, int idx_type,
-                                                           int order, H5O_iterate_cb op,
-                                                           H5O_iterate_t op_data, int fields, long lapl_id)
+    public synchronized static native int
+    H5Ovisit_by_name(long loc_id, String obj_name, int idx_type, int order, H5O_iterate_t op,
+                     H5O_iterate_opdata_t op_data, int fields, long lapl_id)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -7445,24 +7497,24 @@ public class H5 implements java.io.Serializable {
     /**
      * @ingroup JH5O
      *
-     * H5Oopen_by_addr opens a group, dataset, or named datatype using its address within an HDF5 file.
+     * H5Oopen_by_token opens a group, dataset, or named datatype using its object token within an HDF5 file.
      *
      * @param loc_id
      *            IN: File or group identifier
-     * @param addr
-     *            IN: Object's address in the file
+     * @param token
+     *            IN: Object's token in the file
      *
      * @return an object identifier for the opened object
      *
      * @exception HDF5LibraryException
      *            Error from the HDF5 Library.
      **/
-    public static long H5Oopen_by_addr(long loc_id, long addr) throws HDF5LibraryException
+    public static long H5Oopen_by_token(long loc_id, H5O_token_t token) throws HDF5LibraryException
     {
-        long id = _H5Oopen_by_addr(loc_id, addr);
+        long id = _H5Oopen_by_token(loc_id, token);
 
         if (id > 0) {
-            log.trace("OPEN_IDS: H5Oopen_by_addr add {}", id);
+            log.trace("OPEN_IDS: H5Oopen_by_token add {}", id);
             OPEN_IDS.add(id);
             log.trace("OPEN_IDS: {}", OPEN_IDS.size());
         }
@@ -7470,7 +7522,7 @@ public class H5 implements java.io.Serializable {
         return id;
     }
 
-    private synchronized static native long _H5Oopen_by_addr(long loc_id, long addr)
+    private synchronized static native long _H5Oopen_by_token(long loc_id, H5O_token_t token)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -7581,6 +7633,183 @@ public class H5 implements java.io.Serializable {
      *            FALSE if mdc flushes for the object is not disabled
      **/
     public synchronized static native boolean H5Oare_mdc_flushes_disabled(long object_id);
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info retrieves the native HDF5-specific metadata for an HDF5 object specified by an
+     * identifier. Native HDF5-specific metadata includes things like object header information and object
+     * storage layout information.
+     *
+     * @param loc_id
+     *            IN: Identifier for target object
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public static H5O_native_info_t H5Oget_native_info(long loc_id)
+        throws HDF5LibraryException, NullPointerException
+    {
+        return H5Oget_native_info(loc_id, HDF5Constants.H5O_NATIVE_INFO_ALL);
+    }
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info retrieves the native HDF5-specific metadata for an HDF5 object specified by an
+     * identifier. Native HDF5-specific metadata includes things like object header information and object
+     * storage layout information.
+     *
+     * @param loc_id
+     *            IN: Identifier for target object
+     * @param fields
+     *            IN: Object fields to select
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public synchronized static native H5O_native_info_t H5Oget_native_info(long loc_id, int fields)
+        throws HDF5LibraryException, NullPointerException;
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info_by_idx retrieves the native HDF5-specific metadata for an HDF5 object, identifying
+     * the object by an index position. Native HDF5-specific metadata includes things like object header
+     * information and object storage layout information.
+     *
+     * @param loc_id
+     *            IN: File or group identifier
+     * @param group_name
+     *            IN: Name of group, relative to loc_id, in which object is located
+     * @param idx_type
+     *            IN: Type of index by which objects are ordered
+     * @param order
+     *            IN: Order of iteration within index
+     * @param n
+     *            IN: Object to open
+     * @param lapl_id
+     *            IN: Access property list identifier for the link pointing to the object (Not currently used;
+     *                pass as H5P_DEFAULT.)
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public static H5O_native_info_t H5Oget_native_info_by_idx(long loc_id, String group_name, int idx_type,
+                                                              int order, long n, long lapl_id)
+        throws HDF5LibraryException, NullPointerException
+    {
+        return H5Oget_native_info_by_idx(loc_id, group_name, idx_type, order, n,
+                                         HDF5Constants.H5O_NATIVE_INFO_ALL, lapl_id);
+    }
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info_by_idx retrieves the native HDF5-specific metadata for an HDF5 object, identifying
+     * the object by an index position. Native HDF5-specific metadata includes things like object header
+     * information and object storage layout information.
+     *
+     * @param loc_id
+     *            IN: File or group identifier
+     * @param group_name
+     *            IN: Name of group, relative to loc_id, in which object is located
+     * @param idx_type
+     *            IN: Type of index by which objects are ordered
+     * @param order
+     *            IN: Order of iteration within index
+     * @param n
+     *            IN: Object to open
+     * @param fields
+     *            IN: Object fields to select
+     * @param lapl_id
+     *            IN: Access property list identifier for the link pointing to the object (Not currently used;
+     *                pass as H5P_DEFAULT.)
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public synchronized static native H5O_native_info_t H5Oget_native_info_by_idx(
+        long loc_id, String group_name, int idx_type, int order, long n, int fields, long lapl_id)
+        throws HDF5LibraryException, NullPointerException;
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info_by_name retrieves the native HDF5-specific metadata for an HDF5 object, identifying
+     * the object by location and relative name. Native HDF5-specific metadata includes things like object
+     * header information and object storage layout information.
+     *
+     * @param loc_id
+     *            IN: File or group identifier specifying location of group in which object is located
+     * @param name
+     *            IN: Relative name of group
+     * @param lapl_id
+     *            IN: Access property list identifier for the link pointing to the object (Not currently used;
+     *                pass as H5P_DEFAULT.)
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public static H5O_native_info_t H5Oget_native_info_by_name(long loc_id, String name, long lapl_id)
+        throws HDF5LibraryException, NullPointerException
+    {
+        return H5Oget_native_info_by_name(loc_id, name, HDF5Constants.H5O_NATIVE_INFO_ALL, lapl_id);
+    }
+
+    /**
+     * @ingroup JH5O
+     *
+     * H5Oget_native_info_by_name retrieves the native HDF5-specific metadata for an HDF5 object, identifying
+     * the object by location and relative name. Native HDF5-specific metadata includes things like object
+     * header information and object storage layout information.
+     *
+     * @param loc_id
+     *            IN: File or group identifier specifying location of group in which object is located
+     * @param name
+     *            IN: Relative name of group
+     * @param fields
+     *            IN: Object fields to select
+     * @param lapl_id
+     *            IN: Access property list identifier for the link pointing to the object (Not currently used;
+     *                pass as H5P_DEFAULT.)
+     *
+     * @return object information
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            name is null.
+     **/
+    public synchronized static native H5O_native_info_t H5Oget_native_info_by_name(long loc_id, String name,
+                                                                                   int fields, long lapl_id)
+        throws HDF5LibraryException, NullPointerException;
+
+    // /////// unimplemented ////////
+    // herr_t H5Otoken_cmp(hid_t loc_id, const H5O_token_t *token1, const H5O_token_t *token2,
+    //            int *cmp_value);
+    // herr_t H5Otoken_to_str(hid_t loc_id, const H5O_token_t *token, char **token_str);
+    // herr_t H5Otoken_from_str(hid_t loc_id, const char *token_str, H5O_token_t *token);
 
     // ////////////////////////////////////////////////////////////
     // //
@@ -9614,6 +9843,11 @@ public class H5 implements java.io.Serializable {
                                                                boolean ignore_when_disabled)
         throws HDF5LibraryException;
 
+    //  /////  unimplemented /////
+    // herr_t H5Pset_vol(hid_t plist_id, hid_t new_vol_id, const void *new_vol_info);
+    // herr_t H5Pget_vol_id(hid_t plist_id, hid_t *vol_id);
+    // herr_t H5Pget_vol_info(hid_t plist_id, void **vol_info);
+
     // Dataset creation property list (DCPL) routines //
 
     /**
@@ -11245,37 +11479,6 @@ public class H5 implements java.io.Serializable {
     public synchronized static native void H5Pset_copy_object(long ocp_plist_id, int copy_options)
         throws HDF5LibraryException;
 
-    /**
-     * @ingroup JH5P
-     *
-     * H5Pget_version retrieves the version information of various objects for a file creation property list.
-     *
-     * @param plist
-     *            IN: Identifier of the file creation property list.
-     * @param version_info
-     *            OUT: version information.
-     *
-     * <pre>
-     *      version_info[0] = boot  // boot block version number
-     *      version_info[1] = freelist  // global freelist version
-     *      version_info[2] = stab  // symbol table version number
-     *      version_info[3] = shhdr  // shared object header version
-     * </pre>
-     * @return a non-negative value, with the values of version_info initialized, if successful
-     *
-     * @exception HDF5LibraryException
-     *            Error from the HDF5 Library.
-     * @exception NullPointerException
-     *            version_info is null.
-     * @exception IllegalArgumentException
-     *            version_info is illegal.
-     *
-     * @deprecated As of HDF5 1.10.0 in favor of H5Fget_info.
-     **/
-    @Deprecated
-    public synchronized static native int H5Pget_version(long plist, int[] version_info)
-        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
-
     // /////// file drivers property list routines ///////
 
     /**
@@ -12101,16 +12304,401 @@ public class H5 implements java.io.Serializable {
 
     // ////////////////////////////////////////////////////////////
     // //
-    // H5S: Dataspace Interface Functions //
+    // H5R: HDF5 1.12 Reference API Functions //
     // //
     // ////////////////////////////////////////////////////////////
 
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rcreate_object creates a reference pointing to the object named name located at loc id.
+     *
+     * @param loc_id
+     *            IN: Location identifier used to locate the object being pointed to.
+     * @param name
+     *            IN: Name of object at location loc_id.
+     * @param access_id
+     *            IN: Object access identifier to the object being pointed to.
+     *
+     * @return the reference (byte[]) if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native byte[] H5Rcreate_object(long loc_id, String name, long access_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rcreate_region creates the reference, pointing to the region represented by
+     * space id within the object named name located at loc id.
+     *
+     * @param loc_id
+     *            IN: Location identifier used to locate the object being pointed to.
+     * @param name
+     *            IN: Name of object at location loc_id.
+     * @param space_id
+     *            IN: Identifies the dataset region that a dataset region reference points to.
+     * @param access_id
+     *            IN: Object access identifier to the object being pointed to.
+     *
+     * @return the reference (byte[]) if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native byte[] H5Rcreate_region(long loc_id, String name, long space_id,
+                                                              long access_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rcreate_attr creates the reference, pointing to the attribute named attr name
+     * and attached to the object named name located at loc id.
+     *
+     * @param loc_id
+     *            IN: Location identifier used to locate the object being pointed to.
+     * @param name
+     *            IN: Name of object at location loc_id.
+     * @param attr_name
+     *            IN: Name of the attribute within the object.
+     * @param access_id
+     *            IN: Object access identifier to the object being pointed to.
+     *
+     * @return the reference (byte[]) if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native byte[] H5Rcreate_attr(long loc_id, String name, String attr_name,
+                                                            long access_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rdestroy destroys a reference and releases resources.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native void H5Rdestroy(byte[] ref_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rget_type retrieves the type of a reference.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @return a valid reference type if successful; otherwise returns H5R UNKNOWN.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native int H5Rget_type(byte[] ref_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Requal determines whether two references point to the same object, region or attribute.
+     *
+     * @param ref1_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param ref2_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @return true if equal, else false
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native boolean H5Requal(byte[] ref1_ptr, byte[] ref2_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rcopy creates a copy of an existing reference.
+     *
+     * @param src_ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @return a valid copy of the reference (byte[]) if successful.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public synchronized static native byte[] H5Rcopy(byte[] src_ref_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Ropen_object opens that object and returns an identifier.
+     * The object opened with this function should be closed when it is no longer needed
+     * so that resource leaks will not develop. Use the appropriate close function such
+     * as H5Oclose or H5Dclose for datasets.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param rapl_id
+     *            IN: A reference access property list identifier for the reference. The access property
+     *                list can be used to access external files that the reference points
+     *                to (through a file access property list).
+     * @param oapl_id
+     *            IN: An object access property list identifier for the reference. The access property
+     *                property list must be of the same type as the object being referenced,
+     *                that is a group or dataset property list.
+     *
+     * @return a valid identifier if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public static long H5Ropen_object(byte[] ref_ptr, long rapl_id, long oapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException
+    {
+        long id = _H5Ropen_object(ref_ptr, rapl_id, oapl_id);
+        if (id > 0) {
+            log.trace("OPEN_IDS: H5Ropen_object add {}", id);
+            OPEN_IDS.add(id);
+            log.trace("OPEN_IDS: {}", OPEN_IDS.size());
+        }
+        return id;
+    }
+
+    private synchronized static native long _H5Ropen_object(byte[] ref_ptr, long rapl_id, long oapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Ropen region creates a copy of the dataspace of the dataset pointed to by a region reference,
+     * ref ptr, and defines a selection matching the selection pointed to by ref ptr within the dataspace
+     * copy. Use H5Sclose to release the dataspace identifier returned by this function when the identifier is
+     * no longer needed.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param rapl_id
+     *            IN: A reference access property list identifier for the reference. The access property
+     *                list can be used to access external files that the reference points
+     *                to (through a file access property list).
+     * @param oapl_id
+     *            IN: An object access property list identifier for the reference. The access property
+     *                property list must be of the same type as the object being referenced,
+     *                that is a group or dataset property list.
+     *
+     * @return a valid dataspace identifier if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public static long H5Ropen_region(byte[] ref_ptr, long rapl_id, long oapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException
+    {
+        long id = _H5Ropen_region(ref_ptr, rapl_id, oapl_id);
+        if (id > 0) {
+            log.trace("OPEN_IDS: H5Ropen_region add {}", id);
+            OPEN_IDS.add(id);
+            log.trace("OPEN_IDS: {}", OPEN_IDS.size());
+        }
+        return id;
+    }
+
+    private synchronized static native long _H5Ropen_region(byte[] ref_ptr, long rapl_id, long oapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Ropen_attr opens the attribute attached to the object and returns an identifier.
+     * The attribute opened with this function should be closed with H5Aclose when it is no longer needed
+     * so that resource leaks will not develop.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param rapl_id
+     *            IN: A reference access property list identifier for the reference. The access property
+     *                list can be used to access external files that the reference points
+     *                to (through a file access property list).
+     * @param aapl_id
+     *            IN: An attribute access property list identifier for the reference. The access property
+     *                property list must be of the same type as the object being referenced,
+     *                that is a group or dataset property list.
+     *
+     * @return a valid attribute identifier if successful
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            an input array is null.
+     * @exception IllegalArgumentException
+     *            an input array is invalid.
+     **/
+    public static long H5Ropen_attr(byte[] ref_ptr, long rapl_id, long aapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException
+    {
+        long id = _H5Ropen_attr(ref_ptr, rapl_id, aapl_id);
+        if (id > 0) {
+            log.trace("OPEN_IDS: H5Ropen_attr add {}", id);
+            OPEN_IDS.add(id);
+            log.trace("OPEN_IDS: {}", OPEN_IDS.size());
+        }
+        return id;
+    }
+
+    private synchronized static native long _H5Ropen_attr(byte[] ref_ptr, long rapl_id, long aapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rget obj type3 retrieves the type of the referenced object pointed to.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param rapl_id
+     *            IN: A reference access property list identifier for the reference. The access property
+     *                list can be used to access external files that the reference points
+     *                to (through a file access property list).
+     *
+     * @return Returns the object type
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            array is null.
+     * @exception IllegalArgumentException
+     *            array is invalid.
+     **/
+    public synchronized static native int H5Rget_obj_type3(byte[] ref_ptr, long rapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rget_file_name retrieves the file name for the object, region or attribute reference pointed to.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @return Returns the file name of the reference
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            array is null.
+     * @exception IllegalArgumentException
+     *            array is invalid.
+     **/
+    public synchronized static native String H5Rget_file_name(byte[] ref_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rget_obj_name retrieves the object name for the object, region or attribute reference pointed to.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     * @param rapl_id
+     *            IN: A reference access property list identifier for the reference. The access property
+     *                list can be used to access external files that the reference points
+     *                to (through a file access property list).
+     *
+     * @return Returns the object name of the reference
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            array is null.
+     * @exception IllegalArgumentException
+     *            array is invalid.
+     **/
+    public synchronized static native String H5Rget_obj_name(byte[] ref_ptr, long rapl_id)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    /**
+     * @ingroup JH5R
+     *
+     * H5Rget_attr_name retrieves the attribute name for the object, region or attribute reference pointed to.
+     *
+     * @param ref_ptr
+     *            IN: Reference to an object, region or attribute attached to an object.
+     *
+     * @return Returns the attribute name of the reference
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            array is null.
+     * @exception IllegalArgumentException
+     *            array is invalid.
+     **/
+    public synchronized static native String H5Rget_attr_name(byte[] ref_ptr)
+        throws HDF5LibraryException, NullPointerException, IllegalArgumentException;
+
+    // ////////////////////////////////////////////////////////////
+    // //
+    // H5S: Dataspace Interface Functions //
+    // //
+    // ////////////////////////////////////////////////////////////
     /**
      * @defgroup JH5S Java Dataspace (H5S) Interface
      *
      * @see H5S, C-API
      *
      * @see @ref H5S_UG, User Guide
+     **/
+
+    /**
+     * @defgroup JH5S Java Dataspace (H5S) Interface
      **/
 
     /**************** Operations on dataspaces ********************/
@@ -13074,6 +13662,18 @@ public class H5 implements java.io.Serializable {
     H5Sselect_project_intersection(long src_space_id, long dst_space_id, long src_intersect_space_id)
         throws HDF5LibraryException;
 
+    // /////// unimplemented ////////
+    ///// Operations on dataspace selections /////
+
+    //
+    ///// Operations on dataspace selection iterators /////
+    // public synchronized static native     H5Ssel_iter_create(hid_t spaceid, size_t elmt_size, unsigned
+    // flags); public synchronized static native    H5Ssel_iter_get_seq_list(hid_t sel_iter_id, size_t maxseq,
+    // size_t maxbytes, size_t *nseq,
+    //                                        size_t *nbytes, hsize_t *off, size_t *len);
+    // public synchronized static native    H5Ssel_iter_reset(hid_t sel_iter_id, hid_t space_id);
+    // public synchronized static native    H5Ssel_iter_close(hid_t sel_iter_id);
+
     // ////////////////////////////////////////////////////////////
     // //
     // H5T: Datatype Interface Functions //
@@ -13085,6 +13685,10 @@ public class H5 implements java.io.Serializable {
      * @see H5T, C-API
      *
      * @see @ref H5T_UG, User Guide
+     **/
+
+    /**
+     * @defgroup JH5T Java Datatype (H5T) Interface
      **/
 
     /**
@@ -14352,7 +14956,7 @@ public class H5 implements java.io.Serializable {
      * @param pad
      *            OUT: locations to return least-significant and most-significant bit padding type.
      *
-     * <pre>
+     *            <pre>
      *      pad[0] = lsb // least-significant bit padding type
      *      pad[1] = msb // most-significant bit padding type
      * </pre>
@@ -14703,7 +15307,7 @@ public class H5 implements java.io.Serializable {
      * @ingroup JH5T
      *
      * H5Tpack recursively removes padding from within a compound datatype to make it more efficient
-     * (space-wise) to store that data. <p> <b>WARNING:</b> This call only affects the C-data, even if it
+     * (space-wise) to store that data. <P> <b>WARNING:</b> This call only affects the C-data, even if it
      * succeeds, there may be no visible effect on Java objects.
      *
      * @param type_id
@@ -14719,7 +15323,30 @@ public class H5 implements java.io.Serializable {
     /**
      * @ingroup JH5T
      *
-     * H5Tvlen_create creates a new variable-length (VL) dataype.
+     * H5Treclaim reclaims buffer used for VL data.
+     *
+     * @param type_id
+     *            Identifier of the datatype.
+     * @param space_id
+     *            Identifier of the dataspace.
+     * @param xfer_plist_id
+     *            Identifier of a transfer property list for this I/O operation.
+     * @param buf
+     *            Buffer with data to be reclaimed.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     * @exception NullPointerException
+     *            buf is null.
+     **/
+    public synchronized static native void H5Treclaim(long type_id, long space_id, long xfer_plist_id,
+                                                      byte[] buf)
+        throws HDF5LibraryException, NullPointerException;
+
+    /**
+     * @ingroup JH5T
+     *
+     * H5Tvlen_create creates a new variable-length (VL) datatype.
      *
      * @param base_id
      *            IN: Identifier of parent datatype.
@@ -14782,6 +15409,181 @@ public class H5 implements java.io.Serializable {
 
     // public synchronized static native int H5Tunregister(H5T_pers_t pers, String name, int src_id, int
     // dst_id, H5T_conv_t func) throws HDF5LibraryException, NullPointerException;
+
+    // ////////////////////////////////////////////////////////////
+    // //
+    // H5VL: VOL Interface Functions //
+    // //
+    // ////////////////////////////////////////////////////////////
+
+    /**
+     * @defgroup JH5VL Java VOL Connector (H5VL) Interface
+     *
+     * @see H5VL, C-API
+     *
+     * @see @ref H5VL_UG, User Guide
+     **/
+
+    /**
+     * @defgroup JH5VL Java VOL Connector (H5VL) Interface
+     **/
+
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLregister_connector_by_name registers a new VOL connector as a member of the virtual object layer
+     * class.
+     *
+     * @param connector_name
+     *            IN: name of the connector.
+     * @param vipl_id
+     *            IN: VOL initialization property list which must be
+     *                created with H5Pcreate(H5P_VOL_INITIALIZE) (or H5P_DEFAULT).
+     *
+     * @return a VOL connector ID
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5VLregister_connector_by_name(String connector_name, long vipl_id)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLregister_connector_by_value registers a new VOL connector as a member of the virtual object layer
+     * class.
+     *
+     * @param connector_value
+     *            IN: value of the connector.
+     * @param vipl_id
+     *            IN: VOL initialization property list which must be
+     *                created with H5Pcreate(H5P_VOL_INITIALIZE) (or H5P_DEFAULT).
+     *
+     * @return a VOL connector ID
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5VLregister_connector_by_value(int connector_value, long vipl_id)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLis_connector_registered_by_name tests whether a VOL class has been registered.
+     *
+     * @param name
+     *            IN: name of the connector.
+     *
+     * @return true if a VOL connector with that name has been registered
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native boolean H5VLis_connector_registered_by_name(String name)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLis_connector_registered_by_value tests whether a VOL class has been registered.
+     *
+     * @param connector_value
+     *            IN: value of the connector.
+     *
+     * @return  true if a VOL connector with that value has been registered
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native boolean H5VLis_connector_registered_by_value(int connector_value)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLget_connector_id retrieves the ID for a registered VOL connector for a given object.
+     *
+     * @param object_id
+     *            IN: Identifier of the object.
+     *
+     * @return a VOL connector ID
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5VLget_connector_id(long object_id) throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLget_connector_id_by_name retrieves the ID for a registered VOL connector.
+     *
+     * @param name
+     *            IN: name of the connector.
+     *
+     * @return a VOL connector ID
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5VLget_connector_id_by_name(String name)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLget_connector_id_by_value retrieves the ID for a registered VOL connector.
+     *
+     * @param connector_value
+     *            IN: value of the connector.
+     *
+     * @return a VOL connector ID
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native long H5VLget_connector_id_by_value(int connector_value)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLget_connector_name returns the connector name for the VOL associated with the
+     * object or file ID.
+     *
+     * @param object_id
+     *            IN: Identifier of the object.
+     *
+     * @return the connector name
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native String H5VLget_connector_name(long object_id)
+        throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLclose closes a VOL connector ID.
+     *
+     * @param connector_id
+     *            IN: Identifier of the connector.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native void H5VLclose(long connector_id) throws HDF5LibraryException;
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLunregister_connector removes a VOL connector ID from the library.
+     *
+     * @param connector_id
+     *            IN: Identifier of the connector.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native void H5VLunregister_connector(long connector_id)
+        throws HDF5LibraryException;
+
+    // /////// unimplemented ////////
+    // hid_t H5VLregister_connector(const H5VL_class_t *cls, hid_t vipl_id);
 
     // ////////////////////////////////////////////////////////////
     // //

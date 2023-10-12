@@ -181,6 +181,9 @@ public class HDF5LibraryException extends HDF5Exception {
         else if (err_code == HDF5Constants.H5E_MOUNT) {
             return "file mount error";
         }
+        else if (err_code == HDF5Constants.H5E_CANTDELETEFILE) {
+            return "Unable to delete file";
+        }
         else if (err_code == HDF5Constants.H5E_SEEKERROR) {
             return "seek failed";
         }
@@ -208,14 +211,14 @@ public class HDF5LibraryException extends HDF5Exception {
         else if (err_code == HDF5Constants.H5E_CANTRELEASE) {
             return "Can't release object";
         }
-        else if (err_code == HDF5Constants.H5E_BADATOM) {
-            return "Can't find atom information";
+        else if (err_code == HDF5Constants.H5E_BADID) {
+            return "Can't find ID information";
         }
         else if (err_code == HDF5Constants.H5E_BADGROUP) {
             return "Can't find group information";
         }
         else if (err_code == HDF5Constants.H5E_CANTREGISTER) {
-            return "Can't register new atom";
+            return "Can't register new ID";
         }
         else if (err_code == HDF5Constants.H5E_CANTINC) {
             return "Can't increment reference count";

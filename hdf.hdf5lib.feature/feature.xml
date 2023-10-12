@@ -2,7 +2,7 @@
 <feature
       id="hdf.hdf5lib.feature"
       label="HDF5 Java Bindings Feature"
-      version="1.10.10.qualifier">
+      version="1.14.2.qualifier">
 
    <description url="https://gerrit.diamond.ac.uk/plugins/gitiles/scisoft/dawn-hdf">
       Java bindings and filter plugins for HDF5

@@ -12,6 +12,8 @@
 
 package hdf.hdf5lib;
 
+import hdf.hdf5lib.structs.H5O_token_t;
+
 /**
  * @page HDF5CONST Constants and Enumerated Types
  * This class contains C constants and enumerated types of HDF5 library. The
@@ -29,9 +31,6 @@ public class HDF5Constants {
     // /////////////////////////////////////////////////////////////////////////
     // Get the HDF5 constants from the library //
     // /////////////////////////////////////////////////////////////////////////
-
-    /** */
-    public static final long H5_QUARTER_HADDR_MAX = H5_QUARTER_HADDR_MAX();
 
     /** Special parameters for szip compression */
     public static final int H5_SZIP_MAX_PIXELS_PER_BLOCK = H5_SZIP_MAX_PIXELS_PER_BLOCK();
@@ -187,15 +186,15 @@ public class HDF5Constants {
     public static final long H5E_ALREADYINIT = H5E_ALREADYINIT();
     /** Major error codes - Invalid arguments to routine */
     public static final long H5E_ARGS = H5E_ARGS();
-    /** Major error codes - Object atom */
-    public static final long H5E_ATOM = H5E_ATOM();
+    /** Major error codes - Object ID */
+    public static final long H5E_ID = H5E_ID();
     /** Major error codes - Attribute */
     public static final long H5E_ATTR = H5E_ATTR();
-    /** Minor error codes - Object atom related errors - Unable to find atom information (already closed?) */
-    public static final long H5E_BADATOM = H5E_BADATOM();
+    /** Minor error codes - Object ID related errors - Unable to find ID information (already closed?) */
+    public static final long H5E_BADID = H5E_BADID();
     /** Minor error codes - File accessibility errors - Bad file ID accessed */
     public static final long H5E_BADFILE = H5E_BADFILE();
-    /** Minor error codes - Object atom related errors - Unable to find ID group information */
+    /** Minor error codes - Object ID related errors - Unable to find ID group information */
     public static final long H5E_BADGROUP = H5E_BADGROUP();
     /** Minor error codes - Object header related errors - Iteration failed */
     public static final long H5E_BADITER = H5E_BADITER();
@@ -247,12 +246,14 @@ public class HDF5Constants {
     public static final long H5E_CANTCOUNT = H5E_CANTCOUNT();
     /** Minor error codes - File accessibility errors - Unable to create file */
     public static final long H5E_CANTCREATE = H5E_CANTCREATE();
-    /** Minor error codes - Object atom related errors - Unable to decrement reference count */
+    /** Minor error codes - Object ID related errors - Unable to decrement reference count */
     public static final long H5E_CANTDEC = H5E_CANTDEC();
     /** Minor error codes - B-tree related errors - Unable to decode value */
     public static final long H5E_CANTDECODE = H5E_CANTDECODE();
     /** Minor error codes - Object header related errors - Can't delete message */
     public static final long H5E_CANTDELETE = H5E_CANTDELETE();
+    /** Minor error codes - File accessibility errors - Unable to delete file */
+    public static final long H5E_CANTDELETEFILE = H5E_CANTDELETEFILE();
     /** Minor error codes - Cache related errors - Unable to create a flush dependency */
     public static final long H5E_CANTDEPEND = H5E_CANTDEPEND();
     /** Minor error codes - Cache related errors - Unable to mark metadata as dirty */
@@ -277,7 +278,7 @@ public class HDF5Constants {
     public static final long H5E_CANTGET = H5E_CANTGET();
     /** Minor error codes - Resource errors - Unable to compute size */
     public static final long H5E_CANTGETSIZE = H5E_CANTGETSIZE();
-    /** Minor error codes - Object atom related errors - Unable to increment reference count */
+    /** Minor error codes - Object ID related errors - Unable to increment reference count */
     public static final long H5E_CANTINC = H5E_CANTINC();
     /** Minor error codes - Function entry/exit interface - Unable to initialize object */
     public static final long H5E_CANTINIT = H5E_CANTINIT();
@@ -327,7 +328,7 @@ public class HDF5Constants {
     public static final long H5E_CANTRECV = H5E_CANTRECV();
     /** Minor error codes - B-tree related errors - Unable to redistribute records */
     public static final long H5E_CANTREDISTRIBUTE = H5E_CANTREDISTRIBUTE();
-    /** Minor error codes - Object atom related errors - Unable to register new atom */
+    /** Minor error codes - Object ID related errors - Unable to register new ID */
     public static final long H5E_CANTREGISTER = H5E_CANTREGISTER();
     /** Minor error codes - Function entry/exit interface - Unable to release object */
     public static final long H5E_CANTRELEASE = H5E_CANTRELEASE();
@@ -427,6 +428,8 @@ public class HDF5Constants {
     public static final long H5E_LINKCOUNT = H5E_LINKCOUNT();
     /** Minor error codes - Cache related errors - Failure in the cache logging framework */
     public static final long H5E_LOGGING = H5E_LOGGING();
+    /** Major error codes - Map */
+    public static final long H5E_MAP = H5E_MAP();
     /** Minor error codes - File accessibility errors - File mount error */
     public static final long H5E_MOUNT = H5E_MOUNT();
     /** Minor error codes - Parallel MPI - Some MPI function failed */
@@ -441,7 +444,7 @@ public class HDF5Constants {
     public static final long H5E_NOENCODER = H5E_NOENCODER();
     /** I/O pipeline errors - Requested filter is not available */
     public static final long H5E_NOFILTER = H5E_NOFILTER();
-    /** Minor error codes - Object atom related errors - Out of IDs for group */
+    /** Minor error codes - Object ID related errors - Out of IDs for group */
     public static final long H5E_NOIDS = H5E_NOIDS();
     /** Major error codes - No error */
     public static final long H5E_NONE_MAJOR = H5E_NONE_MAJOR();
@@ -517,12 +520,21 @@ public class HDF5Constants {
     public static final long H5E_VERSION = H5E_VERSION();
     /** Major error codes - Virtual File Layer */
     public static final long H5E_VFL = H5E_VFL();
+    /** Major error codes - Virtual Object Layer */
+    public static final long H5E_VOL = H5E_VOL();
     /** Error stack traversal direction - begin at API function, end deep */
     public static final long H5E_WALK_DOWNWARD = H5E_WALK_DOWNWARD();
     /** Error stack traversal direction - begin deep, end at API function */
     public static final long H5E_WALK_UPWARD = H5E_WALK_UPWARD();
     /** Generic low-level file I/O errors - Write failed */
     public static final long H5E_WRITEERROR = H5E_WRITEERROR();
+
+    /** */
+    private static final int H5ES_STATUS_IN_PROGRESS = H5ES_STATUS_IN_PROGRESS();
+    /** */
+    private static final int H5ES_STATUS_SUCCEED = H5ES_STATUS_SUCCEED();
+    /** */
+    private static final int H5ES_STATUS_FAIL = H5ES_STATUS_FAIL();
 
     /** */
     public static final int H5F_ACC_CREAT = H5F_ACC_CREAT();
@@ -556,6 +568,10 @@ public class HDF5Constants {
     public static final int H5F_LIBVER_V18 = H5F_LIBVER_V18();
     /** */
     public static final int H5F_LIBVER_V110 = H5F_LIBVER_V110();
+    /** */
+    public static final int H5F_LIBVER_V112 = H5F_LIBVER_V112();
+    /** */
+    public static final int H5F_LIBVER_V114 = H5F_LIBVER_V114();
     /** */
     public static final int H5F_LIBVER_NBOUNDS = H5F_LIBVER_NBOUNDS();
     /** */
@@ -748,11 +764,11 @@ public class HDF5Constants {
     /** */
     public static final int H5I_NTYPES = H5I_NTYPES();
     /** */
-    public static final int H5I_REFERENCE = H5I_REFERENCE();
-    /** */
     public static final int H5I_UNINIT = H5I_UNINIT();
     /** */
     public static final int H5I_VFL = H5I_VFL();
+    /** */
+    public static final int H5I_VOL = H5I_VOL();
 
     /** */
     public static final int H5L_TYPE_ERROR = H5L_TYPE_ERROR();
@@ -784,11 +800,13 @@ public class HDF5Constants {
     /** */
     public static final int H5O_INFO_NUM_ATTRS = H5O_INFO_NUM_ATTRS();
     /** */
-    public static final int H5O_INFO_HDR = H5O_INFO_HDR();
-    /** */
-    public static final int H5O_INFO_META_SIZE = H5O_INFO_META_SIZE();
-    /** */
     public static final int H5O_INFO_ALL = H5O_INFO_ALL();
+    /** */
+    public static final int H5O_NATIVE_INFO_HDR = H5O_NATIVE_INFO_HDR();
+    /** */
+    public static final int H5O_NATIVE_INFO_META_SIZE = H5O_NATIVE_INFO_META_SIZE();
+    /** */
+    public static final int H5O_NATIVE_INFO_ALL = H5O_NATIVE_INFO_ALL();
     /** */
     public static final int H5O_SHMESG_NONE_FLAG = H5O_SHMESG_NONE_FLAG();
     /** */
@@ -813,6 +831,10 @@ public class HDF5Constants {
     public static final int H5O_TYPE_NAMED_DATATYPE = H5O_TYPE_NAMED_DATATYPE();
     /** */
     public static final int H5O_TYPE_NTYPES = H5O_TYPE_NTYPES();
+    /** */
+    public static final int H5O_MAX_TOKEN_SIZE = H5O_MAX_TOKEN_SIZE();
+    /** */
+    public static final H5O_token_t H5O_TOKEN_UNDEF = H5O_TOKEN_UNDEF();
 
     /** */
     public static final long H5P_ROOT = H5P_ROOT();
@@ -851,6 +873,8 @@ public class HDF5Constants {
     /** */
     public static final long H5P_LINK_ACCESS = H5P_LINK_ACCESS();
     /** */
+    public static final long H5P_VOL_INITIALIZE = H5P_VOL_INITIALIZE();
+    /** */
     public static final long H5P_FILE_CREATE_DEFAULT = H5P_FILE_CREATE_DEFAULT();
     /** */
     public static final long H5P_FILE_ACCESS_DEFAULT = H5P_FILE_ACCESS_DEFAULT();
@@ -881,6 +905,8 @@ public class HDF5Constants {
     /** */
     public static final long H5P_LINK_ACCESS_DEFAULT = H5P_LINK_ACCESS_DEFAULT();
     /** */
+    public static final long H5P_VOL_INITIALIZE_DEFAULT = H5P_VOL_INITIALIZE_DEFAULT();
+    /** */
     public static final int H5P_CRT_ORDER_TRACKED = H5P_CRT_ORDER_TRACKED();
     /** */
     public static final int H5P_CRT_ORDER_INDEXED = H5P_CRT_ORDER_INDEXED();
@@ -892,16 +918,26 @@ public class HDF5Constants {
     /** */
     public static final int H5PL_TYPE_FILTER = H5PL_TYPE_FILTER();
     /** */
+    public static final int H5PL_TYPE_VOL = H5PL_TYPE_VOL();
+    /** */
     public static final int H5PL_TYPE_NONE = H5PL_TYPE_NONE();
     /** */
     public static final int H5PL_FILTER_PLUGIN = H5PL_FILTER_PLUGIN();
     /** */
+    public static final int H5PL_VOL_PLUGIN = H5PL_VOL_PLUGIN();
+    /** */
     public static final int H5PL_ALL_PLUGIN = H5PL_ALL_PLUGIN();
 
+    /** */
+    public static final int H5R_ATTR = H5R_ATTR();
     /** */
     public static final int H5R_BADTYPE = H5R_BADTYPE();
     /** */
     public static final int H5R_DATASET_REGION = H5R_DATASET_REGION();
+    /** */
+    public static final int H5R_DATASET_REGION1 = H5R_DATASET_REGION1();
+    /** */
+    public static final int H5R_DATASET_REGION2 = H5R_DATASET_REGION2();
     /** */
     public static final int H5R_MAXTYPE = H5R_MAXTYPE();
     /** */
@@ -909,7 +945,13 @@ public class HDF5Constants {
     /** */
     public static final int H5R_OBJ_REF_BUF_SIZE = H5R_OBJ_REF_BUF_SIZE();
     /** */
+    public static final int H5R_REF_BUF_SIZE = H5R_REF_BUF_SIZE();
+    /** */
     public static final int H5R_OBJECT = H5R_OBJECT();
+    /** */
+    public static final int H5R_OBJECT1 = H5R_OBJECT1();
+    /** */
+    public static final int H5R_OBJECT2 = H5R_OBJECT2();
 
     /** Define atomic datatypes */
     public static final int H5S_ALL = H5S_ALL();
@@ -1301,6 +1343,8 @@ public class HDF5Constants {
     /** */
     public static final long H5T_STD_REF_OBJ = H5T_STD_REF_OBJ();
     /** */
+    public static final long H5T_STD_REF = H5T_STD_REF();
+    /** */
     public static final long H5T_STD_U16BE = H5T_STD_U16BE();
     /** */
     public static final long H5T_STD_U16LE = H5T_STD_U16LE();
@@ -1368,6 +1412,27 @@ public class HDF5Constants {
     public static final int H5T_VLEN = H5T_VLEN();
     /** */
     public static final int H5T_VL_T = H5T_VL_T();
+
+    /** */
+    public static final int H5VL_CAP_FLAG_NONE = H5VL_CAP_FLAG_NONE();
+    /** */
+    public static final int H5VL_CAP_FLAG_THREADSAFE = H5VL_CAP_FLAG_THREADSAFE();
+    /** */
+    public static final long H5VL_NATIVE = H5VL_NATIVE();
+    /** */
+    public static final String H5VL_NATIVE_NAME = H5VL_NATIVE_NAME();
+    /** */
+    public static final int H5VL_NATIVE_VALUE = H5VL_NATIVE_VALUE();
+    /** */
+    public static final int H5VL_NATIVE_VERSION = H5VL_NATIVE_VERSION();
+    /** */
+    public static final int H5_VOL_INVALID = H5_VOL_INVALID();
+    /** */
+    public static final int H5_VOL_NATIVE = H5_VOL_NATIVE();
+    /** */
+    public static final int H5_VOL_RESERVED = H5_VOL_RESERVED();
+    /** */
+    public static final int H5_VOL_MAX = H5_VOL_MAX();
 
     /** Return values for filter callback function */
     public static final int H5Z_CB_CONT = H5Z_CB_CONT();
@@ -1595,11 +1660,11 @@ public class HDF5Constants {
 
     private static native final long H5E_ARGS();
 
-    private static native final long H5E_ATOM();
+    private static native final long H5E_ID();
 
     private static native final long H5E_ATTR();
 
-    private static native final long H5E_BADATOM();
+    private static native final long H5E_BADID();
 
     private static native final long H5E_BADFILE();
 
@@ -1660,6 +1725,8 @@ public class HDF5Constants {
     private static native final long H5E_CANTDECODE();
 
     private static native final long H5E_CANTDELETE();
+
+    private static native final long H5E_CANTDELETEFILE();
 
     private static native final long H5E_CANTDEPEND();
 
@@ -1837,6 +1904,8 @@ public class HDF5Constants {
 
     private static native final int H5E_MAJOR();
 
+    private static native final long H5E_MAP();
+
     private static native final int H5E_MINOR();
 
     private static native final long H5E_MOUNT();
@@ -1929,6 +1998,8 @@ public class HDF5Constants {
 
     private static native final long H5E_VFL();
 
+    private static native final long H5E_VOL();
+
     private static native final long H5E_WALK_DOWNWARD();
 
     private static native final long H5E_WALK_UPWARD();
@@ -1974,6 +2045,10 @@ public class HDF5Constants {
     private static native final int H5F_LIBVER_V18();
 
     private static native final int H5F_LIBVER_V110();
+
+    private static native final int H5F_LIBVER_V112();
+
+    private static native final int H5F_LIBVER_V114();
 
     private static native final int H5F_LIBVER_NBOUNDS();
 
@@ -2179,11 +2254,11 @@ public class HDF5Constants {
 
     private static native final int H5I_NTYPES();
 
-    private static native final int H5I_REFERENCE();
-
     private static native final int H5I_UNINIT();
 
     private static native final int H5I_VFL();
+
+    private static native final int H5I_VOL();
 
     private static native final int H5L_TYPE_ERROR();
 
@@ -2213,11 +2288,13 @@ public class HDF5Constants {
 
     private static native final int H5O_INFO_NUM_ATTRS();
 
-    private static native final int H5O_INFO_HDR();
-
-    private static native final int H5O_INFO_META_SIZE();
-
     private static native final int H5O_INFO_ALL();
+
+    private static native final int H5O_NATIVE_INFO_HDR();
+
+    private static native final int H5O_NATIVE_INFO_META_SIZE();
+
+    private static native final int H5O_NATIVE_INFO_ALL();
 
     private static native final int H5O_SHMESG_NONE_FLAG();
 
@@ -2242,6 +2319,10 @@ public class HDF5Constants {
     private static native final int H5O_TYPE_NAMED_DATATYPE();
 
     private static native final int H5O_TYPE_NTYPES();
+
+    private static native final int H5O_MAX_TOKEN_SIZE();
+
+    private static native final H5O_token_t H5O_TOKEN_UNDEF();
 
     private static native final long H5P_ROOT();
 
@@ -2279,6 +2360,8 @@ public class HDF5Constants {
 
     private static native final long H5P_LINK_ACCESS();
 
+    private static native final long H5P_VOL_INITIALIZE();
+
     private static native final long H5P_FILE_CREATE_DEFAULT();
 
     private static native final long H5P_FILE_ACCESS_DEFAULT();
@@ -2309,6 +2392,8 @@ public class HDF5Constants {
 
     private static native final long H5P_LINK_ACCESS_DEFAULT();
 
+    private static native final long H5P_VOL_INITIALIZE_DEFAULT();
+
     private static native final int H5P_CRT_ORDER_TRACKED();
 
     private static native final int H5P_CRT_ORDER_INDEXED();
@@ -2319,15 +2404,25 @@ public class HDF5Constants {
 
     private static native final int H5PL_TYPE_FILTER();
 
+    private static native final int H5PL_TYPE_VOL();
+
     private static native final int H5PL_TYPE_NONE();
 
     private static native final int H5PL_FILTER_PLUGIN();
 
     private static native final int H5PL_ALL_PLUGIN();
 
+    private static native final int H5PL_VOL_PLUGIN();
+
+    private static native final int H5R_ATTR();
+
     private static native final int H5R_BADTYPE();
 
     private static native final int H5R_DATASET_REGION();
+
+    private static native final int H5R_DATASET_REGION1();
+
+    private static native final int H5R_DATASET_REGION2();
 
     private static native final int H5R_MAXTYPE();
 
@@ -2335,7 +2430,13 @@ public class HDF5Constants {
 
     private static native final int H5R_OBJ_REF_BUF_SIZE();
 
+    private static native final int H5R_REF_BUF_SIZE();
+
     private static native final int H5R_OBJECT();
+
+    private static native final int H5R_OBJECT1();
+
+    private static native final int H5R_OBJECT2();
 
     private static native final int H5S_ALL();
 
@@ -2725,6 +2826,8 @@ public class HDF5Constants {
 
     private static native final long H5T_STD_REF_OBJ();
 
+    private static native final long H5T_STD_REF();
+
     private static native final long H5T_STD_U16BE();
 
     private static native final long H5T_STD_U16LE();
@@ -2792,6 +2895,26 @@ public class HDF5Constants {
     private static native final int H5T_VLEN();
 
     private static native final int H5T_VL_T();
+
+    private static native final int H5VL_CAP_FLAG_NONE();
+
+    private static native final int H5VL_CAP_FLAG_THREADSAFE();
+
+    private static native final long H5VL_NATIVE();
+
+    private static native final String H5VL_NATIVE_NAME();
+
+    private static native final int H5VL_NATIVE_VALUE();
+
+    private static native final int H5VL_NATIVE_VERSION();
+
+    private static native final int H5_VOL_INVALID();
+
+    private static native final int H5_VOL_NATIVE();
+
+    private static native final int H5_VOL_RESERVED();
+
+    private static native final int H5_VOL_MAX();
 
     private static native final int H5Z_CB_CONT();
 

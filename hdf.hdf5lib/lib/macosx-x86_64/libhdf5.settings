@@ -3,8 +3,8 @@
 
 General Information:
 -------------------
-                   HDF5 Version: 1.10.11
-                  Configured on: 2023-10-27
+                   HDF5 Version: 1.14.2
+                  Configured on: 2023-10-28
                   Configured by: Unix Makefiles
                     Host system: Darwin-21.6.0
               Uname information: Darwin
@@ -51,7 +51,7 @@ Languages:
                AM Fortran Flags: 
          Shared Fortran Library: YES
          Static Fortran Library: YES
-               Module Directory: /Users/runner/work/dawn-hdf5-build/dawn-hdf5-build/hdf5-1.10.11/hdf5-build/mod
+               Module Directory: /Users/runner/work/dawn-hdf5-build/dawn-hdf5-build/hdf5-1.14.2/hdf5-build/mod
 
                             C++: OFF
                    C++ Compiler:  
@@ -70,22 +70,23 @@ Features:
   Parallel Filtered Dataset Writes: 
                 Large Parallel I/O: 
                 High-level library: OFF
+Dimension scales w/ new references: 
                   Build HDF5 Tests: OFF
                   Build HDF5 Tools: ON
                    Build GIF Tools: OFF
                       Threadsafety: ON
-               Default API mapping: v110
+               Default API mapping: v114
     With deprecated public symbols: ON
             I/O filters (external):  DEFLATE
-                               MPE: 
+                     Map (H5M) API: 
                         Direct VFD: 
                         Mirror VFD: 
+                     Subfiling VFD: 
                 (Read-Only) S3 VFD: 
               (Read-Only) HDFS VFD: 
     Packages w/ extra debug output: 
                        API Tracing: OFF
               Using memory checker: OFF
-   Memory allocation sanity checks: OFF
             Function Stack Tracing: OFF
                   Use file locking: best-effort
          Strict File Format Checks: OFF
