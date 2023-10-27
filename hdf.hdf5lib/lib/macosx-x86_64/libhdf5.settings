@@ -4,12 +4,12 @@
 General Information:
 -------------------
                    HDF5 Version: 1.10.11
-                  Configured on: 2023-10-11
+                  Configured on: 2023-10-27
                   Configured by: Unix Makefiles
                     Host system: Darwin-21.6.0
               Uname information: Darwin
                        Byte sex: little-endian
-             Installation point: /Users/runner/build/hdf5/macos/universal2
+             Installation point: /Users/runner/build/hdf5/macos/x86_64
 
 Compiling Options:
 ------------------
@@ -38,7 +38,7 @@ Languages:
                        CPPFLAGS: 
                     H5_CPPFLAGS: 
                     AM_CPPFLAGS: 
-                         CFLAGS:  -std=c99 -fPIC -O3 -I/Users/runner/build/opt/macos/universal2/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include/darwin
+                         CFLAGS:  -std=c99 -fPIC -O3 -m64 -I/Users/runner/build/opt/macos/x86_64/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include/darwin
                       H5_CFLAGS: -Wall;-Warray-bounds;-Wcast-qual;-Wconversion;-Wdouble-promotion;-Wextra;-Wformat=2;-Wframe-larger-than=16384;-Wimplicit-fallthrough;-Wnull-dereference;-Wunused-const-variable;-Wwrite-strings;-Wpedantic;-Wvolatile-register-var;-Wno-c++-compat;-Wbad-function-cast;-Wimplicit-function-declaration;-Wincompatible-pointer-types;-Wmissing-declarations;-Wpacked;-Wshadow;-Wswitch;-Wno-error=incompatible-pointer-types-discards-qualifiers;-Wunused-function;-Wunused-variable;-Wunused-parameter;-Wcast-align;-Wformat;-Wno-missing-noreturn
                       AM_CFLAGS: 
                Shared C Library: YES
@@ -72,7 +72,7 @@ Features:
                 High-level library: OFF
                   Build HDF5 Tests: OFF
                   Build HDF5 Tools: ON
-                   Build GIF Tools: 
+                   Build GIF Tools: OFF
                       Threadsafety: ON
                Default API mapping: v110
     With deprecated public symbols: ON
