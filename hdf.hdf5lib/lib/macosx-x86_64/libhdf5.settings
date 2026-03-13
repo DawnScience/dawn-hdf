@@ -3,10 +3,10 @@
 
 General Information:
 -------------------
-                   HDF5 Version: 1.14.3
-                  Configured on: 2023-11-10
+                   HDF5 Version: 2.1.0
+                  Configured on: 2026-03-15
                   Configured by: Unix Makefiles
-                    Host system: Darwin-21.6.0
+                    Host system: Darwin-23.6.0
               Uname information: Darwin
                        Byte sex: little-endian
              Installation point: /Users/runner/build/hdf5/macos/universal2
@@ -26,43 +26,43 @@ Linking Options:
                         LDFLAGS: 
                      H5_LDFLAGS: 
                      AM_LDFLAGS: 
-                Extra libraries: m;dl
-                       Archiver: /Applications/Xcode_14.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
-                       AR_FLAGS: 
-                         Ranlib: /Applications/Xcode_14.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
+                Extra libraries: m;dl;Threads::Threads
+                       Archiver: /usr/bin/ar
+                       AR_FLAGS:
+                         Ranlib: /usr/bin/ranlib
 
 Languages:
 ----------
                               C: YES
-                     C Compiler: /Applications/Xcode_14.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 14.0.0.14000029
+                     C Compiler: /usr/bin/cc 15.0.0.15000309
                        CPPFLAGS: 
                     H5_CPPFLAGS: 
                     AM_CPPFLAGS: 
-                         CFLAGS:  -std=c99 -fPIC -O3 -I/Users/runner/build/opt/macos/universal2/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include -I/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include/darwin
-                      H5_CFLAGS: -Wall;-Warray-bounds;-Wcast-qual;-Wconversion;-Wdouble-promotion;-Wextra;-Wformat=2;-Wframe-larger-than=16384;-Wimplicit-fallthrough;-Wnull-dereference;-Wunused-const-variable;-Wwrite-strings;-Wpedantic;-Wvolatile-register-var;-Wno-c++-compat;-Wbad-function-cast;-Wimplicit-function-declaration;-Wincompatible-pointer-types;-Wmissing-declarations;-Wpacked;-Wshadow;-Wswitch;-Wno-error=incompatible-pointer-types-discards-qualifiers;-Wunused-function;-Wunused-variable;-Wunused-parameter;-Wcast-align;-Wformat;-Wno-missing-noreturn
+                         CFLAGS:  -std=c11 -fPIC -O3 -D_MSVC_TRADITIONAL=0 -I/Users/runner/build/opt/macos/universal2/include -I/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include -I/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/include/darwin -O3 -DNDEBUG
+                      H5_CFLAGS: -Wall;-Warray-bounds;-Wcast-qual;-Wconversion;-Wdouble-promotion;-Wextra;-Wformat=2;-Wformat-nonliteral;-Wframe-larger-than=16384;-Wimplicit-fallthrough;-Wnull-dereference;-Wunused-const-variable;-Wwrite-strings;-Wpedantic;-Wvolatile-register-var;-Wno-c++-compat;-Wbad-function-cast;-Wimplicit-function-declaration;-Wincompatible-pointer-types;-Wmissing-declarations;-Wpacked;-Wshadow;-Wswitch;-Wno-error=incompatible-pointer-types-discards-qualifiers;-Wunused-function;-Wunused-variable;-Wunused-parameter;-Wcast-align;-Wformat;-Wno-missing-noreturn
                       AM_CFLAGS: 
                Shared C Library: YES
                Static C Library: NO
 
                         Fortran: OFF
                Fortran Compiler:  
-                  Fortran Flags: 
+                  Fortran Flags:  
                H5 Fortran Flags: 
                AM Fortran Flags: 
          Shared Fortran Library: YES
          Static Fortran Library: NO
-               Module Directory: /Users/runner/work/dawn-hdf5-build/dawn-hdf5-build/hdf5-1.14.3/hdf5-build/mod
+               Module Directory: /Users/runner/work/dawn-hdf5-build/dawn-hdf5-build/hdf5-2.1.0/hdf5-build/mod
 
                             C++: OFF
                    C++ Compiler:  
-                      C++ Flags: 
+                      C++ Flags:  
                    H5 C++ Flags: 
                    AM C++ Flags: 
              Shared C++ Library: YES
              Static C++ Library: NO
 
                            JAVA: ON
-                  JAVA Compiler: /usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/bin/javac 
+                  JAVA Compiler: /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/bin/javac 11.0.30
 
 Features:
 ---------
@@ -73,21 +73,22 @@ Features:
 Dimension scales w/ new references: 
                   Build HDF5 Tests: OFF
                   Build HDF5 Tools: ON
-                   Build GIF Tools: OFF
+                           Threads: ON
                       Threadsafety: ON
-               Default API mapping: v114
+                       Concurrency: OFF
+               Default API mapping: v200
     With deprecated public symbols: ON
             I/O filters (external):  DEFLATE
-                     Map (H5M) API: 
-                        Direct VFD: 
-                        Mirror VFD: 
-                     Subfiling VFD: 
-                (Read-Only) S3 VFD: 
-              (Read-Only) HDFS VFD: 
+                  _Float16 support: ON
+                     Map (H5M) API: OFF
+                        Direct VFD: OFF
+                        Mirror VFD: OFF
+                     Subfiling VFD: OFF
+                (Read-Only) S3 VFD: OFF
+              (Read-Only) HDFS VFD: OFF
     Packages w/ extra debug output: 
                        API Tracing: OFF
               Using memory checker: OFF
-            Function Stack Tracing: OFF
                   Use file locking: best-effort
          Strict File Format Checks: OFF
       Optimization Instrumentation: 

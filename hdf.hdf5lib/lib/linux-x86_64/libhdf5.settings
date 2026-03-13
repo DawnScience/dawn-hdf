@@ -3,10 +3,10 @@
 
 General Information:
 -------------------
-                   HDF5 Version: 1.14.5
-                  Configured on: 2024-10-16
+                   HDF5 Version: 2.1.0
+                  Configured on: 2026-03-15
                   Configured by: Unix Makefiles
-                    Host system: Linux-6.5.0-1025-azure
+                    Host system: Linux-6.14.0-1017-azure
               Uname information: Linux
                        Byte sex: little-endian
              Installation point: /io/docker-base/build/hdf5/linux/x86_64
@@ -26,7 +26,7 @@ Linking Options:
                         LDFLAGS: 
                      H5_LDFLAGS: 
                      AM_LDFLAGS: 
-                Extra libraries: m;dl
+                Extra libraries: m;dl;Threads::Threads
                        Archiver: /opt/rh/devtoolset-10/root/usr/bin/ar
                        AR_FLAGS:
                          Ranlib: /opt/rh/devtoolset-10/root/usr/bin/ranlib
@@ -38,31 +38,31 @@ Languages:
                        CPPFLAGS: 
                     H5_CPPFLAGS: 
                     AM_CPPFLAGS: 
-                         CFLAGS:   -std=c99 -fPIC -O3 -pthread -m64 -D_MSVC_TRADITIONAL=0 -I/io/docker-base/build/opt/linux/x86_64/include -I/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.el7_9.x86_64/include -I/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.el7_9.x86_64/include/linux -fstdarg-opt -fdiagnostics-urls=never -fno-diagnostics-color -fmessage-length=0
-                      H5_CFLAGS: -Wall;-Wcast-qual;-Wconversion;-Wextra;-Wfloat-equal;-Wformat=2;-Winit-self;-Winvalid-pch;-Wmissing-include-dirs;-Wshadow;-Wundef;-Wwrite-strings;-pedantic;-Wno-c++-compat;-Wbad-function-cast;-Wcast-align;-Wformat;-Wimplicit-function-declaration;-Wint-to-pointer-cast;-Wmissing-declarations;-Wmissing-prototypes;-Wnested-externs;-Wold-style-definition;-Wpacked;-Wpointer-sign;-Wpointer-to-int-cast;-Wredundant-decls;-Wstrict-prototypes;-Wswitch;-Wunused-but-set-variable;-Wunused-variable;-Wunused-function;-Wunused-parameter;-finline-functions;-Wno-aggregate-return;-Wno-inline;-Wno-missing-format-attribute;-Wno-missing-noreturn;-Wno-overlength-strings;-Wlarger-than=2560;-Wlogical-op;-Wframe-larger-than=16384;-Wpacked-bitfield-compat;-Wsync-nand;-Wno-unsuffixed-float-constants;-Wdouble-promotion;-Wtrampolines;-Wstack-usage=8192;-Wmaybe-uninitialized;-Wno-jump-misses-init;-Wstrict-overflow=2;-Wno-suggest-attribute=const;-Wno-suggest-attribute=noreturn;-Wno-suggest-attribute=pure;-Wno-suggest-attribute=format;-Wdate-time;-Warray-bounds=2;-Wc99-c11-compat;-Wincompatible-pointer-types;-Wint-conversion;-Wshadow;-Wduplicated-cond;-Whsa;-Wnormalized;-Wnull-dereference;-Wunused-const-variable;-Walloca;-Walloc-zero;-Wduplicated-branches;-Wformat-overflow=2;-Wformat-truncation=1;-Wrestrict;-Wattribute-alias;-Wshift-overflow=2;-Wcast-function-type;-Wmaybe-uninitialized;-Wcast-align=strict;-Wno-suggest-attribute=cold;-Wno-suggest-attribute=malloc;-Wattribute-alias=2;-Wmissing-profile;-Wc11-c2x-compat
+                         CFLAGS:   -std=c11 -fPIC -O3 -pthread -m64 -D_MSVC_TRADITIONAL=0 -I/io/docker-base/build/opt/linux/x86_64/include -I/usr/lib/jvm/java-11-openjdk-11.0.23.0.9-2.el7_9.x86_64/include -I/usr/lib/jvm/java-11-openjdk-11.0.23.0.9-2.el7_9.x86_64/include/linux -fstdarg-opt -fdiagnostics-urls=never -fno-diagnostics-color -fmessage-length=0 -O3 -DNDEBUG
+                      H5_CFLAGS: -Wall;-Wcast-qual;-Wconversion;-Wextra;-Wfloat-equal;-Wformat=2;-Wformat-nonliteral;-Winit-self;-Winvalid-pch;-Wmissing-include-dirs;-Wshadow;-Wundef;-Wwrite-strings;-pedantic;-Wno-c++-compat;-Wbad-function-cast;-Wcast-align;-Wformat;-Wimplicit-function-declaration;-Wint-to-pointer-cast;-Wmissing-declarations;-Wmissing-prototypes;-Wnested-externs;-Wold-style-definition;-Wpacked;-Wpointer-sign;-Wpointer-to-int-cast;-Wredundant-decls;-Wstrict-prototypes;-Wswitch;-Wunused-but-set-variable;-Wunused-variable;-Wunused-function;-Wunused-parameter;-finline-functions;-Wno-aggregate-return;-Wno-inline;-Wno-missing-format-attribute;-Wno-missing-noreturn;-Wno-overlength-strings;-Wlarger-than=2584;-Wlogical-op;-Wframe-larger-than=16384;-Wpacked-bitfield-compat;-Wsync-nand;-Wno-unsuffixed-float-constants;-Wdouble-promotion;-Wtrampolines;-Wstack-usage=8192;-Wmaybe-uninitialized;-Wno-jump-misses-init;-Wstrict-overflow=2;-Wno-suggest-attribute=const;-Wno-suggest-attribute=noreturn;-Wno-suggest-attribute=pure;-Wno-suggest-attribute=format;-Wdate-time;-Warray-bounds=2;-Wincompatible-pointer-types;-Wint-conversion;-Wshadow;-Wduplicated-cond;-Whsa;-Wnormalized;-Wnull-dereference;-Wunused-const-variable;-Walloca;-Walloc-zero;-Wduplicated-branches;-Wformat-overflow=2;-Wformat-truncation=1;-Wrestrict;-Wattribute-alias;-Wshift-overflow=2;-Wcast-function-type;-Wmaybe-uninitialized;-Wcast-align=strict;-Wno-suggest-attribute=cold;-Wno-suggest-attribute=malloc;-Wattribute-alias=2;-Wmissing-profile;-Wc11-c2x-compat
                       AM_CFLAGS: 
                Shared C Library: YES
                Static C Library: NO
 
                         Fortran: OFF
                Fortran Compiler:  
-                  Fortran Flags: 
+                  Fortran Flags:  
                H5 Fortran Flags: 
                AM Fortran Flags: 
          Shared Fortran Library: YES
          Static Fortran Library: NO
-               Module Directory: /io/hdf5-1.14.5/hdf5-build/mod
+               Module Directory: /io/hdf5-2.1.0/hdf5-build/mod
 
                             C++: OFF
                    C++ Compiler:  
-                      C++ Flags: 
+                      C++ Flags:  
                    H5 C++ Flags: 
                    AM C++ Flags: 
              Shared C++ Library: YES
              Static C++ Library: NO
 
                            JAVA: ON
-                  JAVA Compiler: /usr/bin/javac 
+                  JAVA Compiler: /usr/bin/javac 11.0.23
 
 Features:
 ---------
@@ -73,9 +73,10 @@ Features:
 Dimension scales w/ new references: 
                   Build HDF5 Tests: OFF
                   Build HDF5 Tools: ON
-                   Build GIF Tools: OFF
+                           Threads: ON
                       Threadsafety: ON
-               Default API mapping: v114
+                       Concurrency: OFF
+               Default API mapping: v200
     With deprecated public symbols: ON
             I/O filters (external):  DEFLATE
                   _Float16 support: OFF

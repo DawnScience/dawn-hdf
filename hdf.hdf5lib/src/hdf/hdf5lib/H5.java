@@ -4,7 +4,7 @@
  *                                                                           *
  * This file is part of HDF5.  The full HDF5 copyright notice, including     *
  * terms governing use, modification, and redistribution, is contained in    *
- * the COPYING file, which can be found at the root of the source code       *
+ * the LICENSE file, which can be found at the root of the source code       *
  * distribution tree, or in https://www.hdfgroup.org/licenses.               *
  * If you do not have access to either file, you may request a copy from     *
  * help@hdfgroup.org.                                                        *
@@ -64,7 +64,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @page HDF5LIB HDF5 Java API Package
+ * \page HDF5LIB HDF5 Java API Package
  * This class is the Java interface for the HDF5 library.
  * <p>
  * This code is the called by Java programs to access the entry points of the HDF5 library. Each routine wraps
@@ -111,7 +111,7 @@ import org.slf4j.LoggerFactory;
  * </tr>
  * <tr>
  * <td>void * <br />
- * (i.e., pointer to `Any')</td>
+ * (i.e., pointer to `Any`)</td>
  * <td>Special -- see @ref HDFARRAY</td>
  * </tr>
  * </table>
@@ -184,7 +184,7 @@ import org.slf4j.LoggerFactory;
  * static native C order.
  * <p>
  * The upshot is that any Java array of numbers (either primitive or sub-classes of type <b>Number</b>) can be
- * passed as an ``Object'', and the Java API will translate to and from the appropriate packed array of bytes
+ * passed as an `Object`, and the Java API will translate to and from the appropriate packed array of bytes
  * needed by the C library. So the function above would be declared:
  *
  * @code
@@ -234,7 +234,7 @@ import org.slf4j.LoggerFactory;
  * which prints out the HDF5 error stack, as described in the HDF5 C API <i><b>@ref H5Eprint()</b>.</i> This
  * may be used by Java exception handlers to print out the HDF5 error stack. <hr>
  *
- * @version HDF5 1.14.5 <BR>
+ * @version HDF5 2.0.1 <BR>
  *          <b>See also: </b>
  *          @ref HDFARRAY hdf.hdf5lib.HDFArray<br />
  *          @ref HDF5CONST hdf.hdf5lib.HDF5Constants<br />
@@ -274,9 +274,11 @@ public class H5 implements java.io.Serializable {
      * <li>LIB_VERSION[1]: The minor version of the library.</li>
      * <li>LIB_VERSION[2]: The release number of the library.</li>
      * </ul>
-     * Make sure to update the versions number when a different library is used.
+     * NOTE: This version is automatically synchronized with H5public.h via the auto-generated
+     *       H5Version class. To update the version, edit src/H5public.h (H5_VERS_MAJOR,
+     *       H5_VERS_MINOR, H5_VERS_RELEASE). Do NOT manually edit the version numbers.
      */
-    public final static int LIB_VERSION[] = {1, 14, 5};
+    public final static int LIB_VERSION[] = {H5Version.MAJOR, H5Version.MINOR, H5Version.RELEASE};
 
     /**
      * @ingroup JH5
@@ -360,12 +362,12 @@ public class H5 implements java.io.Serializable {
         // else load standard library
         if (!isLibraryLoaded) {
             String osName = System.getProperty("os.name");
-            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.310" : "%s"; // need to do this to minimise build differences
+            String libNameFormat = osName.startsWith("Mac OS X") ? "%s.320" : (osName.startsWith("Windows") ? "lib%s" : "%s"); // need to do this to minimise build differences
             try {
                 // to need to preload dependent library (as its internal link is wrong most of the time)
                 System.loadLibrary(String.format(libNameFormat, "hdf5"));
 
-                s_libraryName = "hdf5_java";
+                s_libraryName = osName.startsWith("Windows") ? "libhdf5_java" : "hdf5_java";
                 mappedName    = System.mapLibraryName(s_libraryName);
                 System.loadLibrary(s_libraryName);
                 isLibraryLoaded = true;
@@ -711,7 +713,7 @@ public class H5 implements java.io.Serializable {
 
     // /////// unimplemented ////////
     //  herr_t H5free_memory(void *mem);
-    //  void *H5allocate_memory(size_t size, hbool_t clear);
+    //  void *H5allocate_memory(size_t size, bool clear);
     //  void *H5resize_memory(void *mem, size_t size);
 
     // ////////////////////////////////////////////////////////////
@@ -4754,11 +4756,11 @@ public class H5 implements java.io.Serializable {
 
     // /////// unimplemented ////////
     // H5_DLL hid_t H5EScreate(void);
-    // H5_DLL herr_t H5ESwait(hid_t es_id, uint64_t timeout, size_t *num_in_progress, hbool_t *err_occurred);
-    // H5_DLL herr_t H5EScancel(hid_t es_id, size_t *num_not_canceled, hbool_t *err_occurred);
+    // H5_DLL herr_t H5ESwait(hid_t es_id, uint64_t timeout, size_t *num_in_progress, bool *err_occurred);
+    // H5_DLL herr_t H5EScancel(hid_t es_id, size_t *num_not_canceled, bool *err_occurred);
     // H5_DLL herr_t H5ESget_count(hid_t es_id, size_t *count);
     // H5_DLL herr_t H5ESget_op_counter(hid_t es_id, uint64_t *counter);
-    // H5_DLL herr_t H5ESget_err_status(hid_t es_id, hbool_t *err_occurred);
+    // H5_DLL herr_t H5ESget_err_status(hid_t es_id, bool *err_occurred);
     // H5_DLL herr_t H5ESget_err_count(hid_t es_id, size_t *num_errs);
     // H5_DLL herr_t H5ESget_err_info(hid_t es_id, size_t num_err_info, H5ES_err_info_t err_info[],
     //                                size_t *err_cleared);
@@ -5429,11 +5431,11 @@ public class H5 implements java.io.Serializable {
     //     unsigned hits[2], unsigned misses[2], unsigned evictions[2], unsigned bypasses[2]);
     //  herr_t H5Fget_mdc_image_info(hid_t file_id, haddr_t *image_addr, hsize_t *image_size);
     // #ifdef H5_HAVE_PARALLEL
-    //    herr_t H5Fset_mpi_atomicity(hid_t file_id, hbool_t flag);
-    //    herr_t H5Fget_mpi_atomicity(hid_t file_id, hbool_t *flag);
+    //    herr_t H5Fset_mpi_atomicity(hid_t file_id, bool flag);
+    //    herr_t H5Fget_mpi_atomicity(hid_t file_id, bool *flag);
     // #endif /* H5_HAVE_PARALLEL */
 
-    // /**
+    // /*
     // * H5Fget_vfd_handle returns a pointer to the file handle from the
     // low-level file driver
     // * currently being used by the HDF5 library for file I/O.
@@ -5450,7 +5452,7 @@ public class H5 implements java.io.Serializable {
     // H5Fget_vfd_handle(int file_id, int fapl)
     //             throws HDF5LibraryException;
 
-    // /**
+    // /*
     // * H5Fget_mdc_config loads the current metadata cache configuration into
     // * the instance of H5AC_cache_config_t pointed to by the config_ptr
     // parameter.
@@ -5467,7 +5469,7 @@ public class H5 implements java.io.Serializable {
     // public synchronized static native void H5Fget_mdc_config(int file_id, H5AC_cache_config_t config_ptr)
     //             throws HDF5LibraryException, NullPointerException;
 
-    // /**
+    // /*
     // * H5Fset_mdc_config attempts to configure the file's metadata cache
     // according to the configuration supplied.
     // *
@@ -5504,8 +5506,8 @@ public class H5 implements java.io.Serializable {
     //  herr_t H5FDget_vfd_handle(H5FD_t *file, hid_t fapl, void**file_handle);
     //  herr_t H5FDread(H5FD_t *file, H5FD_mem_t type, hid_t dxpl_id, haddr_t addr, size_t size, void
     //  *buf/*out*/); herr_t H5FDwrite(H5FD_t *file, H5FD_mem_t type, hid_t dxpl_id, haddr_t addr, size_t
-    //  size, const void *buf); herr_t H5FDflush(H5FD_t *file, hid_t dxpl_id, hbool_t closing); herr_t
-    //  H5FDtruncate(H5FD_t *file, hid_t dxpl_id, hbool_t closing); herr_t H5FDlock(H5FD_t *file, hbool_t rw);
+    //  size, const void *buf); herr_t H5FDflush(H5FD_t *file, hid_t dxpl_id, bool closing); herr_t
+    //  H5FDtruncate(H5FD_t *file, hid_t dxpl_id, bool closing); herr_t H5FDlock(H5FD_t *file, bool rw);
     //  herr_t H5FDunlock(H5FD_t *file);
     //  herr_t H5FDdriver_query(hid_t driver_id, unsigned long *flags/*out*/);
 
@@ -6391,7 +6393,7 @@ public class H5 implements java.io.Serializable {
     // hid_t H5Iregister(H5I_type_t type, const void *object);
 
     // typedef herr_t (*H5I_free_t)(void *);
-    // H5I_type_t H5Iregister_type(size_t hash_size, unsigned reserved, H5I_free_t free_func);
+    // H5I_type_t H5Iregister_type2(unsigned reserved, H5I_free_t free_func);
 
     // void *H5Iremove_verify(hid_t id, H5I_type_t id_type);
 
@@ -10113,7 +10115,7 @@ public class H5 implements java.io.Serializable {
         throws HDF5LibraryException, IllegalArgumentException;
 
     //    /////  unimplemented /////
-    //    /**
+    //    /*
     //     * H5Pget_vds_file_cache_size retrieves the size of the vds link open file cache.
     //     *
     //     * @param fapl_id
@@ -10128,7 +10130,7 @@ public class H5 implements java.io.Serializable {
     //    public synchronized static native int H5Pget_vds_file_cache_size(long fapl_id) throws
     //    HDF5LibraryException;
     //
-    //    /**
+    //    /*
     //     * H5Pset_vds_file_cache_size sets the number of files that can be held open in an vds link open
     //     * file cache.
     //     *
@@ -10160,10 +10162,9 @@ public class H5 implements java.io.Serializable {
      * @param size
      *            OUT: the offset value and the size of the external file data.
      *
-     *            <pre>
-     *      size[0] = offset // a location to return an offset value
-     *      size[1] = size // a location to return the size of
-     *                // the external file data.
+     * <pre>
+     *    size[0] = offset // a location to return an offset value
+     *    size[1] = size // a location to return the size of the external file data.
      * </pre>
      *
      * @return a non-negative value if successful
@@ -10760,6 +10761,59 @@ public class H5 implements java.io.Serializable {
      **/
     public synchronized static native void H5Pset_efile_prefix(long dapl_id, String prefix)
         throws HDF5LibraryException, NullPointerException;
+
+    /**
+     * @ingroup JH5P
+     *
+     * H5Pget_virtual_spatial_tree accesses the flag for whether to use/not use a spatial tree
+     * during mapping operations on a Virtual Dataset. The default value is true.
+     *
+     * Use of a spatial tree will accelerate the process of searching through mappings
+     * to determine which contain intersections with the user's selection region.
+     * With the tree disabled, all mappings will simply be iterated through and
+     * checked directly.
+     *
+     * Certain workflows may find that tree creation overhead outweighs the time saved
+     * on reads. In this case, disabling this property will lead to a performance improvement,
+     * though it is expected that almost all cases will benefit from the tree on net.
+     *
+     * @param dapl_id
+     *            IN: Dataset access property list
+     *
+     * @return true if the given dapl is set to use a spatial tree, false if not.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native boolean H5Pget_virtual_spatial_tree(long dapl_id)
+        throws HDF5LibraryException;
+
+    /**
+     * @ingroup JH5P
+     *
+     * H5Pset_virtual_spatial_tree sets the dapl to use/not use a spatial tree
+     * during mapping operations on a Virtual Dataset. The default value is true.
+     *
+     * Use of a spatial tree will accelerate the process of searching through mappings
+     * to determine which contain intersections with the user's selection region.
+     * With the tree disabled, all mappings will simply be iterated through and
+     * checked directly.
+     *
+     * Certain workflows may find that tree creation overhead outweighs the time saved
+     * on reads. In this case, disabling this property will lead to a performance improvement,
+     * though it is expected that almost all cases will benefit from the tree on net.
+     *
+     * @param dapl_id
+     *            IN: Dataset access property list
+     *
+     * @param use_tree
+     *            IN: the use_tree flag setting
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native void H5Pset_virtual_spatial_tree(long dapl_id, boolean use_tree)
+        throws HDF5LibraryException;
 
     // public synchronized static native void H5Pset_append_flush(long plist_id, int ndims, long[] boundary,
     // H5D_append_cb func, H5D_append_t udata) throws HDF5LibraryException;
@@ -11864,13 +11918,13 @@ public class H5 implements java.io.Serializable {
     // herr_t H5Pset_file_image(hid_t fapl_id, void *buf_ptr, size_t buf_len);
     // herr_t H5Pget_file_image_callbacks(hid_t fapl_id, H5FD_file_image_callbacks_t *callbacks_ptr);
     // herr_t H5Pset_file_image_callbacks(hid_t fapl_id, H5FD_file_image_callbacks_t *callbacks_ptr);
-    // herr_t H5Pset_core_write_tracking(hid_t fapl_id, hbool_t is_enabled, size_t page_size);
-    // herr_t H5Pget_core_write_tracking(hid_t fapl_id, hbool_t *is_enabled, size_t *page_size);
+    // herr_t H5Pset_core_write_tracking(hid_t fapl_id, bool is_enabled, size_t page_size);
+    // herr_t H5Pget_core_write_tracking(hid_t fapl_id, bool *is_enabled, size_t *page_size);
     // #ifdef H5_HAVE_PARALLEL
-    // herr_t H5Pset_all_coll_metadata_ops(hid_t accpl_id, hbool_t is_collective);
-    //  herr_t H5Pget_all_coll_metadata_ops(hid_t plist_id, hbool_t *is_collective);
-    // herr_t H5Pset_coll_metadata_write(hid_t fapl_id, hbool_t is_collective);
-    // herr_t H5Pget_coll_metadata_write(hid_t fapl_id, hbool_t *is_collective);
+    // herr_t H5Pset_all_coll_metadata_ops(hid_t accpl_id, bool is_collective);
+    //  herr_t H5Pget_all_coll_metadata_ops(hid_t plist_id, bool *is_collective);
+    // herr_t H5Pset_coll_metadata_write(hid_t fapl_id, bool is_collective);
+    // herr_t H5Pget_coll_metadata_write(hid_t fapl_id, bool *is_collective);
     // #endif /* H5_HAVE_PARALLEL */
     //  herr_t H5Pset_mdc_image_config(hid_t plist_id, H5AC_cache_image_config_t *config_ptr);
     //  herr_t H5Pget_mdc_image_config(hid_t plist_id, H5AC_cache_image_config_t *config_ptr /*out*/);
@@ -11889,7 +11943,7 @@ public class H5 implements java.io.Serializable {
 
     // Dataset xfer property list (DXPL) routines //
     // herr_t H5Pset_buffer(hid_t plist_id, size_t size, void *tconv, void *bkg);
-    // herr_t H5Pset_preserve(hid_t plist_id, hbool_t status);
+    // herr_t H5Pset_preserve(hid_t plist_id, bool status);
     // int H5Pget_preserve(hid_t plist_id);
     // herr_t H5Pset_filter_callback(hid_t plist, H5Z_filter_func_t func, void *op_data)
     // herr_t H5Pget_vlen_mem_manager(hid_t plist, H5MM_allocate_t *alloc, void **alloc_info, H5MM_free_t
@@ -13835,6 +13889,33 @@ public class H5 implements java.io.Serializable {
     /**
      * @ingroup JH5T
      *
+     * H5Tcomplex_create creates a new complex number datatype object.
+     *
+     * @param base_id
+     *            IN: Datatype identifier for the complex number base datatype.
+     *                Must be a floating-point datatype.
+     *
+     * @return a valid datatype identifier
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public static long H5Tcomplex_create(long base_id) throws HDF5LibraryException
+    {
+        long id = _H5Tcomplex_create(base_id);
+        if (id > 0) {
+            log.trace("OPEN_IDS: H5Tcomplex_create add {}", id);
+            OPEN_IDS.add(id);
+            log.trace("OPEN_IDS: {}", OPEN_IDS.size());
+        }
+        return id;
+    }
+
+    private synchronized static native long _H5Tcomplex_create(long base_id) throws HDF5LibraryException;
+
+    /**
+     * @ingroup JH5T
+     *
      * H5Tconvert converts nelmts elements from the type specified by the src_id identifier to type dst_id.
      *
      * @param src_id
@@ -13924,6 +14005,9 @@ public class H5 implements java.io.Serializable {
      * @param buf
      *            IN: Buffer for the data type object to be decoded.
      *
+     * @param buf_size
+     *           IN: Size of the buffer.
+     *
      * @return a new object handle
      *
      * @exception HDF5LibraryException
@@ -13931,9 +14015,9 @@ public class H5 implements java.io.Serializable {
      * @exception NullPointerException
      *            buf is null.
      **/
-    public static long H5Tdecode(byte[] buf) throws HDF5LibraryException, NullPointerException
+    public static long H5Tdecode(byte[] buf, long buf_size) throws HDF5LibraryException, NullPointerException
     {
-        long id = _H5Tdecode(buf);
+        long id = _H5Tdecode(buf, buf_size);
         if (id > 0) {
             log.trace("OPEN_IDS: H5Tdecode add {}", id);
             OPEN_IDS.add(id);
@@ -13942,7 +14026,7 @@ public class H5 implements java.io.Serializable {
         return id;
     }
 
-    private synchronized static native long _H5Tdecode(byte[] buf)
+    private synchronized static native long _H5Tdecode(byte[] buf, long buf_size)
         throws HDF5LibraryException, NullPointerException;
 
     /**
@@ -13987,7 +14071,7 @@ public class H5 implements java.io.Serializable {
     public synchronized static native int H5Tencode(long obj_id, byte[] buf, long nalloc)
         throws HDF5LibraryException, NullPointerException;
 
-    // /**
+    // /*
     //  * @ingroup JH5T
     //  *
     //  * H5Tencode converts a data type description into binary form in a buffer.
@@ -14335,6 +14419,8 @@ public class H5 implements java.io.Serializable {
             retValue = "H5T_VLEN";
         else if (HDF5Constants.H5T_ARRAY == class_id) /* Array types */
             retValue = "H5T_ARRAY";
+        else if (HDF5Constants.H5T_COMPLEX == class_id) /* Complex number types */
+            retValue = "H5T_COMPLEX";
         else
             retValue = "H5T_NO_CLASS";
 
@@ -15580,6 +15666,24 @@ public class H5 implements java.io.Serializable {
      *            Error from the HDF5 Library.
      **/
     public synchronized static native void H5VLunregister_connector(long connector_id)
+        throws HDF5LibraryException;
+
+    /**
+     * @ingroup JH5VL
+     *
+     * H5VLcmp_connector_cls Determines whether two connector identifiers refer to the same connector.
+     *
+     * @param conn_id1
+     *            IN: Identifier of connector to compare.
+     * @param conn_id2
+     *            IN: Identifier of connector to compare.
+     *
+     * @return true if the connector identifiers refer to the same connector, else false.
+     *
+     * @exception HDF5LibraryException
+     *            Error from the HDF5 Library.
+     **/
+    public synchronized static native boolean H5VLcmp_connector_cls(long conn_id1, long conn_id2)
         throws HDF5LibraryException;
 
     // /////// unimplemented ////////
